@@ -1,0 +1,301 @@
+- id: the_blinding_light
+  conditions:
+    tier: 1
+    turn_max: 1
+  text: >
+    The cave-dwellers stumble into the open air for the first time. Many collapse,
+    shielding their eyes. Some weep. Others curse your name. The sun — which you
+    promised would bring truth — feels like punishment. {npc} shouts
+    that you have led them to their death.
+  choices:
+    - text: "Speak gently. Explain that the pain is temporary — their eyes will adjust."
+      skill_check: rhetoric
+      difficulty: 3
+      outcomes:
+        success:
+          text: >
+            Your voice carries over the groaning crowd. Slowly, a few open their
+            eyes. They see grass. Trees. A sky wider than anything the cave could
+            hold. The weeping turns to murmurs of wonder.
+          effects:
+            stability: 0.03
+        failure:
+          text: >
+            Your words are lost in the wailing. Several people turn back toward
+            the cave mouth. You cannot stop them all.
+          effects:
+            population: -2
+            chaos: 0.06
+    - text: "Stand tall and silent. Let the sun speak for itself."
+      skill_check: wisdom
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            Minutes pass. One by one, eyes adjust. A child laughs at a butterfly.
+            An old man touches soil for the first time. Silence becomes reverence.
+          effects:
+            stability: 0.04
+            chaos: -0.02
+        failure:
+          text: >
+            Your silence is read as indifference. Frustration festers. A group
+            huddles near the cave entrance, whispering about going back.
+          effects:
+            chaos: 0.1
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: first_night_outside
+  conditions:
+    tier: 1
+    turn_min: 1
+    blocked_by_milestones: [fire]
+  text: >
+    Night falls. The cave-dwellers have never seen stars. Most are terrified —
+    the darkness above feels infinite, an inverted abyss. There is no fire.
+    No shelter. Children cry. The cold is not severe, but fear makes it feel
+    lethal. {npc} asks what you intend to do about this.
+  choices:
+    - text: "Organize everyone to gather wood and build a fire together."
+      skill_check: pragmatism
+      difficulty: 3
+      outcomes:
+        success:
+          text: >
+            The work gives them purpose. Within an hour, a fire crackles at the
+            center of your makeshift camp. Faces glow orange. Someone begins to
+            hum. It is the first moment that feels like community.
+          effects:
+            stability: 0.04
+            shelter: 1
+            chaos: -0.03
+        failure:
+          text: >
+            The effort is disorganized. Green wood smokes but won't catch.
+            People blame each other. A fight breaks out near the treeline.
+          effects:
+            chaos: 0.1
+    - text: "Command the strongest to build shelters. The rest must wait."
+      skill_check: authority
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            Rough lean-tos rise against the wind. It is not comfort, but it is
+            structure. People see that orders can produce results.
+          effects:
+            shelter: 2
+            stability: 0.03
+        failure:
+          text: >
+            The strong resent being singled out. One throws down his bundle
+            of sticks and walks away. Others follow.
+          effects:
+            chaos: 0.12
+            loyalty_all: -0.05
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_hungry_crowd
+  conditions:
+    tier: 1
+    turn_min: 2
+    blocked_by_milestones: [sustenance]
+  text: >
+    Two days outside the cave. The initial wonder has been replaced by a more
+    primal concern: hunger. The cave had its fungus and blind fish. Out here,
+    no one knows what is safe to eat. {npc} approaches you with hollow eyes
+    and asks when the food will come.
+  choices:
+    - text: "Lead a foraging party yourself. Show them what the land provides."
+      skill_check: courage
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You find wild figs, a stream with fish, herbs that smell of life.
+            You return with arms full. They look at you differently now —
+            not as a philosopher, but as a provider.
+          effects:
+            food: 5
+            stability: 0.03
+        failure:
+          text: >
+            The foraging yields little. Someone eats unknown berries and
+            falls ill. Trust in your judgment wavers.
+          effects:
+            food: 1
+            population: -1
+            chaos: 0.1
+    - text: "Delegate: appoint the most capable-looking person to lead the search."
+      skill_check: wisdom
+      difficulty: 3
+      outcomes:
+        success:
+          text: >
+            Your delegate returns with a modest haul. More importantly,
+            someone other than you has proven useful. Leadership is
+            beginning to distribute.
+          effects:
+            food: 3
+            stability: 0.02
+          assign_role: forager
+        failure:
+          text: >
+            Your delegate wanders aimlessly and returns empty-handed,
+            blaming you for the task. Murmurs spread.
+          effects:
+            chaos: 0.1
+            loyalty_all: -0.03
+    - text: "Ration what little you have. Discipline now prevents collapse later."
+      skill_check: authority
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            The rationing is harsh but fair. People grumble but no one starves.
+            A fragile order holds.
+          effects:
+            food: -1
+            stability: 0.02
+        failure:
+          text: >
+            Accusations of favoritism erupt. Who decided you control the food?
+            A man takes his share by force. Others follow.
+          effects:
+            chaos: 0.15
+            food: -3
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_dissenters
+  conditions:
+    tier: 1
+    turn_min: 3
+    chaos_min: 0.1
+  text: >
+    A faction is forming. Led by {npc}, a group of eight stands apart from
+    the others. They do not sit at the fire. They whisper. When you approach,
+    they fall silent. Finally, their leader speaks: "You dragged us from our
+    home. You promised truth. All we have found is suffering. We are going back."
+  choices:
+    - text: "Plead with them. Remind them what they saw — the sun, the sky, the truth."
+      skill_check: rhetoric
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            Your words cut through their anger. You speak of shadows on a wall,
+            and how they once mistook flickering for reality. Tears fall. Not all
+            stay — but most do.
+          effects:
+            population: -2
+            stability: 0.03
+            chaos: -0.05
+          history_flag: conflict_resolved
+        failure:
+          text: >
+            They have heard your philosophy before. It fed no one. The group
+            departs. Others watch them go and wonder if they chose correctly.
+          effects:
+            population: -8
+            chaos: 0.15
+    - text: "Let them go. Freedom means the freedom to choose darkness."
+      skill_check: wisdom
+      difficulty: 3
+      outcomes:
+        success:
+          text: >
+            You watch them disappear into the cave mouth. Those who remain
+            chose to remain. That choice has weight. The group feels smaller
+            but more resolute.
+          effects:
+            population: -8
+            stability: 0.05
+            chaos: -0.08
+        failure:
+          text: >
+            Their departure triggers a cascade. Others reconsider. By morning,
+            the group has thinned dangerously.
+          effects:
+            population: -10
+            chaos: 0.12
+    - text: "Block the cave entrance. No one goes back."
+      skill_check: authority
+      difficulty: 6
+      chaos_delta: 0.2
+      outcomes:
+        success:
+          text: >
+            Stones are piled. The path back is sealed. The dissenters rage,
+            but with nowhere to go, they submit. You have kept your numbers.
+            But at what cost to their trust?
+          effects:
+            loyalty_all: -0.15
+            stability: 0.02
+        failure:
+          text: >
+            The attempt to block the cave triggers a violent confrontation.
+            In the scuffle, someone is badly hurt. The dissenters flee into
+            the night. Fear of you now lives alongside fear of the world.
+          effects:
+            population: -8
+            chaos: 0.25
+            loyalty_all: -0.1
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_stream
+  conditions:
+    tier: 1
+    turn_min: 1
+    blocked_by_milestones: [sustenance]
+  text: >
+    {npc} stumbles back into camp, dripping wet and grinning. "There is
+    water — a stream, not far. Clean water, running over stones." It is the
+    first piece of genuinely good news. But the stream is downhill, through
+    thick brush. Getting there safely with everyone will take coordination.
+  choices:
+    - text: "Move the entire camp to the stream. Water is life."
+      skill_check: pragmatism
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            The move is exhausting but worth it. By evening, the camp sits
+            beside fresh water. Children splash in the shallows. For the first
+            time, something feels permanent.
+          effects:
+            food: 4
+            stability: 0.03
+            shelter: 1
+        failure:
+          text: >
+            The move is chaotic. Supplies are lost in the brush. An elderly
+            man twists his ankle on the slope. You arrive at the stream
+            with less than you started.
+          effects:
+            food: 1
+            chaos: 0.06
+    - text: "Send a small party to carry water back. Don't uproot everyone."
+      skill_check: wisdom
+      difficulty: 3
+      outcomes:
+        success:
+          text: >
+            The water carriers return, and with them a sense that problems
+            can be solved without upheaval. Measured. Deliberate.
+          effects:
+            food: 3
+            stability: 0.02
+          assign_role: water_carrier
+        failure:
+          text: >
+            The small party takes too long. Thirst makes people irritable.
+            By the time water arrives, tempers have already frayed.
+          effects:
+            food: 1
+            chaos: 0.05
+    - text: "Retreat to the cave."
+      special: retreat

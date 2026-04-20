@@ -1,0 +1,30 @@
+personalities:
+  loyalist:
+    weight: 20
+    loyalty_range: [0.6, 0.9]
+    description: "a steady presence"
+  skeptic:
+    weight: 25
+    loyalty_range: [0.2, 0.5]
+    description: "quick to question"
+  ambitious:
+    weight: 20
+    loyalty_range: [0.3, 0.6]
+    description: "restless with ambition"
+  fearful:
+    weight: 20
+    loyalty_range: [0.4, 0.7]
+    description: "anxious and watchful"
+  pragmatist:
+    weight: 15
+    loyalty_range: [0.4, 0.7]
+    description: "practical above all"
+
+skills:
+  - labor
+  - rhetoric
+  - combat
+  - wisdom
+  - scouting
+
+skill_range: [1, 9]

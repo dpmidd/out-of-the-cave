@@ -1,0 +1,500 @@
+- id: the_allegory_retold
+  conditions:
+    tier: 4
+    turn_min: 14
+    required_milestones: [education]
+    blocked_by_milestones: [allegory_taught]
+  text: >
+    One evening, as the settlement gathers, a young woman asks: "Plato,
+    why did we leave the cave? Not the practical reason — the real reason.
+    What were we running from?" The fire falls silent. Every face turns
+    to you. They are ready — perhaps for the first time — to hear the
+    truth of their own imprisonment.
+  choices:
+    - text: "Tell the allegory. Shadows on a wall. Chains they chose not to see."
+      skill_check: rhetoric
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You speak of prisoners who loved their chains because the
+            chains were familiar. Of shadows mistaken for reality. Of
+            the pain of turning toward the light. As you speak, you see
+            recognition in their eyes. Some weep. Not from sadness —
+            from understanding. The allegory is no longer yours. It
+            belongs to all of them now.
+          effects:
+            knowledge: 3
+            stability: 0.05
+            chaos: -0.04
+          history_flag: allegory_taught
+        failure:
+          text: >
+            The allegory confuses them. "Are you saying we were stupid?"
+            a man demands. The metaphor collapses into insult. You have
+            mistimed the lesson, and philosophy becomes a weapon
+            turned against itself.
+          effects:
+            chaos: 0.1
+            loyalty_all: -0.06
+            knowledge: 1
+    - text: "Let them discover the meaning themselves. Ask questions, don't lecture."
+      skill_check: wisdom
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You ask: "What did you see on the cave wall? What do you
+            see now? What changed?" The answers come slowly — halting,
+            personal, profound. A fisherman says, "I thought the shadow
+            of a fish was the fish." A child says, "I thought the dark
+            was everywhere." By morning, they have taught the allegory
+            to themselves.
+          effects:
+            knowledge: 2
+            stability: 0.04
+          history_flag: allegory_taught
+        failure:
+          text: >
+            The questions lead nowhere. People grow frustrated with
+            your Socratic method. "Just tell us what you mean!"
+            The lesson dissolves into irritation.
+          effects:
+            chaos: 0.05
+            knowledge: 1
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_trial_of_power
+  conditions:
+    tier: 4
+    turn_min: 15
+    required_milestones: [council, three_laws]
+    chaos_min: 0.08
+  text: >
+    {npc} stands before the council and speaks words that silence the
+    settlement: "Why does Plato lead? He is wise, perhaps. But wisdom
+    alone does not give the right to rule. The laws apply to everyone —
+    even the one who wrote them. If we are a republic, then prove it.
+    Submit to judgment."
+  choices:
+    - text: "Accept the challenge. Submit yourself to the council's judgment."
+      skill_check: wisdom
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You stand before your own council and answer their questions.
+            It takes hours. They challenge your decisions, your motives,
+            your right to authority. In the end, they affirm your role —
+            not as a king, but as a citizen who serves. The precedent
+            is more valuable than any verdict.
+          effects:
+            stability: 0.05
+            chaos: -0.06
+            knowledge: 2
+            law: "No one is above the laws of the republic"
+        failure:
+          text: >
+            The trial reveals fractures you didn't know existed. The
+            council splits. Half want you removed. Half want the
+            challenger exiled. The republic is at war with itself.
+          effects:
+            chaos: 0.18
+            stability: -0.08
+            loyalty_all: -0.06
+    - text: "Deflect with rhetoric. Turn the challenge into a philosophical debate."
+      skill_check: rhetoric
+      difficulty: 8
+      outcomes:
+        success:
+          text: >
+            You turn the question back on them: "Who among you would
+            lead better? And by what right?" The debate becomes a
+            seminar on governance. No one is satisfied, but everyone
+            is thinking. You have survived through the only weapon
+            you truly possess — ideas.
+          effects:
+            stability: 0.03
+            knowledge: 2
+            chaos: -0.03
+        failure:
+          text: >
+            They see through the deflection. "He dodges the question
+            like a politician," someone sneers. Your intellectual
+            games have lost their charm. The settlement wants
+            answers, not questions.
+          effects:
+            chaos: 0.12
+            loyalty_all: -0.08
+    - text: "Assert authority. The philosopher leads because only the philosopher can."
+      skill_check: authority
+      difficulty: 8
+      chaos_delta: 0.15
+      outcomes:
+        success:
+          text: >
+            Your voice carries the weight of everything you have built.
+            The challenger backs down. But the silence that follows is
+            not respect — it is submission. You have won the argument
+            and lost something harder to name.
+          effects:
+            stability: 0.02
+            loyalty_all: -0.1
+        failure:
+          text: >
+            "This is not a republic — it is a tyranny with better
+            speeches!" The challenger storms out. Five people follow.
+            The cracks in your authority are now visible to all.
+          effects:
+            population: -5
+            chaos: 0.2
+            stability: -0.1
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_guardian_oath
+  conditions:
+    tier: 4
+    turn_min: 14
+    required_milestones: [council, first_law]
+    blocked_by_milestones: [guardian_class]
+  text: >
+    Threats from beyond the settlement — wild animals, harsh weather,
+    the unknown — have made one thing clear: someone must protect the
+    others. {npc} and two others have already taken to standing watch
+    at night, unbidden. The council asks you to formalize this. "We
+    need guardians," they say. "But who watches the guardians?"
+  choices:
+    - text: "Create a guardian class with strict oaths: they protect, they do not rule."
+      skill_check: rhetoric
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            The oath is simple: "I protect the republic. I own nothing
+            beyond what is given. I serve the laws, not the lawmaker."
+            Three take the oath. It is imperfect, idealistic, and
+            profoundly necessary. Plato's guardians walk the perimeter
+            for the first time.
+          effects:
+            stability: 0.04
+            chaos: -0.04
+          assign_role: guardian
+        failure:
+          text: >
+            The oath feels hollow to those asked to take it. "You want
+            us to fight and die, but own nothing?" The guardians refuse
+            the terms. Protection becomes a bargaining chip.
+          effects:
+            chaos: 0.1
+            loyalty_all: -0.05
+    - text: "Arm the strongest. Worry about oaths later."
+      skill_check: pragmatism
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            Sharpened spears and stone-tipped clubs. The armed patrol
+            deters predators and gives the settlement its first sense
+            of security. But armed people are not the same as guardians.
+            Power has shifted toward those who carry weapons.
+          effects:
+            stability: 0.02
+            chaos: 0.04
+          assign_role: enforcer
+        failure:
+          text: >
+            The armed group quickly becomes a clique. They eat first,
+            sleep best, and answer to no one. You have created a
+            military caste without meaning to.
+          effects:
+            chaos: 0.12
+            loyalty_all: -0.08
+          assign_role: enforcer
+    - text: "Everyone defends the settlement. No special class."
+      skill_check: courage
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            The idea of universal defense resonates. Training sessions
+            begin — crude, but equalizing. Everyone learns to hold a
+            spear, to build a barrier, to sound an alarm. There are
+            no guardians because everyone is a guardian.
+          effects:
+            stability: 0.03
+            knowledge: 1
+        failure:
+          text: >
+            Universal defense means universal incompetence. When a
+            pack of wolves circles the camp at night, no one knows
+            what to do. Two goats are lost and a child is bitten.
+            Specialization exists for a reason.
+          effects:
+            food: -3
+            chaos: 0.08
+            population: -1
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_foreign_contact
+  conditions:
+    tier: 4
+    turn_min: 16
+    required_milestones: [explored]
+    min_population: 6
+  text: >
+    Smoke on the eastern ridge. Not your smoke. {npc} returns from
+    scouting with eyes wide: "There are others. Another group — larger,
+    established. They have clay walls and cultivated fields. They know
+    we are here." The settlement erupts in debate. Are they friends?
+    Rivals? Threats?
+  choices:
+    - text: "Send an envoy with gifts. Open trade."
+      skill_check: rhetoric
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            The envoy returns with seeds, pottery, and an invitation.
+            The other settlement is cautious but curious. Trade begins —
+            your fish for their grain, your labor for their tools.
+            The world is larger than the cave, and larger than your
+            camp. This is the beginning of something new.
+          effects:
+            food: 5
+            shelter: 2
+            stability: 0.05
+            knowledge: 2
+        failure:
+          text: >
+            The envoy is turned away. The other settlement wants
+            nothing to do with "cave people." The rejection stings.
+            Some feel smaller for trying.
+          effects:
+            chaos: 0.06
+            stability: -0.03
+    - text: "Fortify the settlement. Prepare for the worst."
+      skill_check: pragmatism
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            Walls rise. Ditches are dug. The settlement transforms from
+            a camp into a defensible position. The other group takes
+            notice and keeps their distance — respect earned through
+            readiness, not aggression.
+          effects:
+            shelter: 3
+            stability: 0.03
+        failure:
+          text: >
+            The fortification effort exhausts everyone and strains food
+            supplies. And the other settlement interprets the walls as
+            hostility. Tension builds where none existed before.
+          effects:
+            food: -3
+            chaos: 0.08
+    - text: "Do nothing. Let them come to us, or not."
+      skill_check: wisdom
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            Patience proves wise. Weeks pass. Eventually, a lone
+            trader appears with a basket of olives and a smile.
+            Contact is made on your terms, at your pace.
+          effects:
+            food: 3
+            stability: 0.02
+            knowledge: 1
+        failure:
+          text: >
+            Your inaction is read as weakness. The other group
+            begins encroaching on your foraging grounds. By the
+            time you respond, the best territory is claimed.
+          effects:
+            food: -2
+            chaos: 0.06
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_philosopher_king_question
+  conditions:
+    tier: 4
+    turn_min: 18
+    required_milestones: [justice, allegory_taught, guardian_class]
+    blocked_by_milestones: [philosopher_king]
+  text: >
+    The settlement gathers for what feels like the most important night
+    since the exodus. The guardians stand at the perimeter. The council
+    sits in the center. The fire burns low. {npc} rises and speaks for
+    all of them: "Plato, you brought us here. You taught us. You built
+    this with us. The question we must answer together is this: should
+    you rule permanently? Should anyone? What is this thing we have
+    built — and what should it become?"
+  choices:
+    - text: "Accept. The philosopher must lead, not because he wants to, but because he must."
+      skill_check: wisdom
+      difficulty: 8
+      outcomes:
+        success:
+          text: >
+            You accept not with pride, but with the gravity of someone
+            who understands the burden. "I will lead," you say, "but
+            not as a king. As a servant of the laws we have written
+            together. The day someone wiser appears, I will step aside."
+            The silence that follows is not submission. It is trust.
+          effects:
+            stability: 0.06
+            chaos: -0.05
+            knowledge: 2
+          history_flag: philosopher_king
+        failure:
+          text: >
+            Your acceptance is heard as ambition. "He planned this all
+            along," someone mutters. The vote splits. Half the council
+            walks out. The philosopher-king has a crown, but half a
+            kingdom.
+          effects:
+            chaos: 0.15
+            stability: -0.06
+            loyalty_all: -0.08
+    - text: "Refuse. True freedom means no permanent ruler — not even a wise one."
+      skill_check: rhetoric
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            Your refusal shocks them. Then inspires them. "If Plato
+            will not rule," {npc} says slowly, "then we must learn
+            to rule ourselves." The council takes on new weight. The
+            laws take on new meaning. You have given them the greatest
+            gift: responsibility.
+          effects:
+            stability: 0.05
+            chaos: -0.04
+            knowledge: 2
+            law: "No single person shall hold permanent authority"
+          history_flag: philosopher_king
+        failure:
+          text: >
+            Your refusal creates a vacuum. Without a clear leader,
+            factions form overnight. The ambitious see opportunity.
+            The fearful see abandonment. Your noble gesture has
+            destabilized everything you built.
+          effects:
+            chaos: 0.18
+            stability: -0.08
+    - text: "Propose a rotation. Leadership passes between qualified citizens."
+      skill_check: pragmatism
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            The idea is radical — power that moves, that belongs to
+            no one permanently. The council debates for three days
+            and agrees to a rotation of governance. It is fragile,
+            unprecedented, and alive with possibility.
+          effects:
+            stability: 0.05
+            chaos: -0.04
+            knowledge: 2
+            law: "Leadership rotates among qualified citizens"
+          history_flag: philosopher_king
+        failure:
+          text: >
+            The rotation is agreed upon but immediately contested.
+            Who qualifies? Who decides? The mechanism itself becomes
+            the next crisis. You have solved one problem by creating
+            a more complicated one.
+          effects:
+            chaos: 0.1
+            stability: -0.04
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_law_of_justice
+  conditions:
+    tier: 4
+    turn_min: 15
+    required_milestones: [three_laws]
+    blocked_by_milestones: [justice]
+  text: >
+    A dispute between two families has escalated beyond what custom can
+    resolve. One family accuses the other of stealing timber. The accused
+    says they were given permission. There are no witnesses. The council
+    turns to you: "We have laws about sharing and about leadership. But
+    we have no law about what happens when people disagree about the
+    facts. We need a way to settle disputes. Properly."
+  choices:
+    - text: "Establish trial by council. Evidence, testimony, a verdict by majority."
+      skill_check: rhetoric
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            The first formal trial is tense but transformative. Witnesses
+            speak. Evidence is examined. The council deliberates and
+            rules. It is imperfect — it will always be imperfect — but
+            it is just. The concept of due process enters the world.
+          effects:
+            stability: 0.04
+            chaos: -0.04
+            knowledge: 1
+            law: "Dispute resolution"
+        failure:
+          text: >
+            The trial collapses into chaos. Council members disagree,
+            witnesses contradict each other, and the accused accuses
+            the accuser. Justice is declared impossible.
+          effects:
+            chaos: 0.1
+            stability: -0.04
+    - text: "Create a right of appeal. Any citizen can challenge a ruling."
+      skill_check: wisdom
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            The right of appeal is revolutionary. It says: even the
+            council can be wrong. Even the laws can be questioned.
+            It is the most dangerous and most necessary idea your
+            republic has produced.
+          effects:
+            stability: 0.05
+            chaos: -0.05
+            knowledge: 2
+            law: "Right of appeal"
+        failure:
+          text: >
+            The right of appeal is immediately abused. Every decision
+            is appealed. Every ruling is contested. The council cannot
+            function. You have created a system that consumes itself.
+          effects:
+            chaos: 0.12
+            stability: -0.05
+    - text: "Let the wronged party choose: compensation or exile of the offender."
+      skill_check: authority
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            The choice-based system is crude but effective. Most choose
+            compensation — practical people in a practical world. Exile
+            is reserved for the worst offenses. It is not elegant, but
+            it resolves the dispute and sets a precedent.
+          effects:
+            stability: 0.03
+            law: "Dispute resolution"
+        failure:
+          text: >
+            The wronged party chooses exile. The exiled man's family
+            erupts in fury. What was meant to resolve one dispute has
+            created ten more.
+          effects:
+            population: -2
+            chaos: 0.12
+    - text: "Retreat to the cave."
+      special: retreat

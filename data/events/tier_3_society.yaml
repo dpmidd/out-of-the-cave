@@ -1,0 +1,483 @@
+- id: the_teaching
+  conditions:
+    tier: 3
+    turn_min: 7
+    required_milestones: [council]
+    blocked_by_milestones: [education]
+  text: >
+    A child approaches you one evening and asks why the sky changes color.
+    You begin to explain — and realize every adult has stopped to listen.
+    They have never been taught anything. The cave offered only echoes.
+    {npc} says quietly, "Could you teach us more?"
+  choices:
+    - text: "Begin regular lessons. Geometry in the dirt. Names for the stars."
+      skill_check: wisdom
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            The lessons become ritual. Each evening, a circle forms.
+            You draw shapes and name constellations. An old woman learns
+            to count past twenty. A young man asks what justice means.
+            Something is kindling that hunger cannot extinguish.
+          effects:
+            knowledge: 2
+            stability: 0.03
+        failure:
+          text: >
+            The lessons bore them. People drift away after the first
+            few evenings. "Philosophy does not fill stomachs," {npc}
+            says, not unkindly.
+          effects:
+            knowledge: 1
+            chaos: 0.04
+    - text: "Teach only the council. Knowledge is power — distribute it carefully."
+      skill_check: authority
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            The council absorbs your teachings. They begin to reason,
+            to debate, to question. But the others watch the closed
+            meetings with suspicion. A class divide is forming.
+          effects:
+            knowledge: 2
+            stability: 0.02
+            chaos: 0.05
+        failure:
+          text: >
+            The council members are insulted. "We are equals here, not
+            your students." The attempt at selective education backfires.
+          effects:
+            chaos: 0.08
+            loyalty_all: -0.05
+    - text: "Let knowledge come naturally. People learn when they need to."
+      outcomes:
+        success:
+          text: >
+            Time passes. People learn by doing — which herbs heal, which
+            wood burns longest, which soil grows food. Practical wisdom,
+            not philosophy. But wisdom nonetheless.
+          effects:
+            knowledge: 1
+            stability: 0.01
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_murder
+  conditions:
+    tier: 3
+    turn_min: 8
+    required_milestones: [first_law]
+    chaos_min: 0.1
+    min_population: 8
+  text: >
+    A body is found at dawn. {npc} lies still beside the granary, a
+    dark bruise across the temple. The food stores have been raided.
+    Accusations fly instantly — the ambitious, the hungry, the outsider.
+    There is no evidence. Only rage and grief. Your people look to you
+    with murder in their eyes and ask for justice you have not yet
+    invented.
+  choices:
+    - text: "Call a trial. Let the council hear testimony and decide."
+      skill_check: rhetoric
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            The trial is agonizing. Three days of accusations. But the
+            process itself becomes the point. Evidence is weighed. A
+            verdict is reached — exile, not death. The people have chosen
+            reason over vengeance. It costs them dearly, but something
+            sacred has been built.
+          effects:
+            stability: 0.04
+            chaos: -0.05
+            population: -1
+            law: "Trial by council"
+          history_flag: conflict_resolved
+        failure:
+          text: >
+            The trial dissolves into a shouting match. The accused flees
+            into the night. Half the settlement believes you sheltered
+            a killer. Trust fractures along lines that may never heal.
+          effects:
+            chaos: 0.15
+            stability: -0.05
+            loyalty_all: -0.08
+    - text: "Execute the most likely suspect. Swift justice prevents chaos."
+      skill_check: authority
+      difficulty: 6
+      chaos_delta: 0.1
+      outcomes:
+        success:
+          text: >
+            The execution is quick. The settlement falls silent — not
+            with peace, but with fear. Order is restored through terror.
+            No one steals again. No one speaks freely again either.
+          effects:
+            population: -1
+            stability: 0.02
+            loyalty_all: -0.12
+            law: "Theft is punished by death"
+        failure:
+          text: >
+            The execution is botched and public. People vomit, scream,
+            turn away. You have shown them something worse than the
+            cave's shadows. Two families leave in the night.
+          effects:
+            population: -3
+            chaos: 0.2
+            loyalty_all: -0.15
+    - text: "Investigate yourself. Spend days searching for the truth."
+      skill_check: courage
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You find the stolen food hidden beneath a lean-to. The thief
+            confesses — they were feeding a sick child in secret. The
+            settlement must decide: mercy or law. Either way, they are
+            thinking about justice for the first time.
+          effects:
+            knowledge: 1
+            stability: 0.03
+            food: 2
+          history_flag: conflict_resolved
+        failure:
+          text: >
+            Your investigation turns up nothing. Days wasted while the
+            settlement stews in suspicion. Everyone suspects everyone.
+            The social fabric tears at invisible seams.
+          effects:
+            chaos: 0.12
+            stability: -0.04
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_drought
+  conditions:
+    tier: 3
+    turn_min: 8
+    required_milestones: [sustenance]
+  text: >
+    The stream slows to a trickle, then stops. The earth cracks. Plants
+    wilt. The food stores shrink daily. {npc} reports that at this rate,
+    you have three days before hunger becomes desperation. The land that
+    welcomed you is showing its teeth.
+  choices:
+    - text: "Ration everything. Strict portions, no exceptions."
+      skill_check: authority
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            Rationing holds. People are hungry but alive. The discipline
+            is painful, but it proves that structure can bend without
+            breaking. When the rain finally comes, the settlement has
+            learned to endure.
+          effects:
+            food: -3
+            stability: 0.03
+            chaos: -0.02
+        failure:
+          text: >
+            Rationing collapses on the second day. The strong take from
+            the weak. A child goes hungry while a man eats double. Your
+            system has exposed the cruelty it was meant to prevent.
+          effects:
+            food: -5
+            chaos: 0.15
+            stability: -0.06
+    - text: "Send scouts far afield to find a new water source."
+      skill_check: courage
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            The scouts return after two harrowing days with news of a
+            spring beyond the ridge. The move is exhausting but the
+            water is clear and abundant. Crisis averted — barely.
+          effects:
+            food: 4
+            stability: 0.03
+            knowledge: 1
+        failure:
+          text: >
+            The scouts do not return for four days. When they do, one
+            is injured and they found nothing. The settlement's morale
+            breaks. Some speak openly of returning to the cave.
+          effects:
+            chaos: 0.12
+            population: -1
+    - text: "Pray to whatever gods the cave-dwellers remember."
+      skill_check: rhetoric
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You lead a ceremony — improvised, earnest, strange. The
+            rain comes the next day. Coincidence, perhaps. But the
+            people believe, and belief has power. A shared ritual
+            binds them closer.
+          effects:
+            food: 2
+            stability: 0.02
+            knowledge: 1
+        failure:
+          text: >
+            The prayers are met with silence. The sky stays clear and
+            cruel. Some begin to doubt not just the gods, but you.
+            "Even the heavens ignore the philosopher."
+          effects:
+            chaos: 0.08
+            loyalty_all: -0.05
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_ambitious_one
+  conditions:
+    tier: 3
+    turn_min: 9
+    required_milestones: [roles_assigned]
+    min_population: 6
+  text: >
+    {npc} has been gathering supporters. They are charismatic, capable,
+    and increasingly vocal about what they call your "failures." Tonight,
+    they stand before the fire and announce: "I should be on the council.
+    I have done more for this settlement than half the people you chose.
+    Give me a role, or I will make my own."
+  choices:
+    - text: "Give them a role. Channel ambition into service."
+      skill_check: wisdom
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You appoint them to a meaningful role. Their energy, once
+            corrosive, becomes productive. They organize a work crew
+            that builds faster than any before. Ambition, properly
+            directed, is a resource.
+          effects:
+            stability: 0.03
+            shelter: 1
+          assign_role: foreman
+        failure:
+          text: >
+            The role only emboldens them. They begin countermanding your
+            decisions, building a parallel authority. You have legitimized
+            a rival.
+          effects:
+            chaos: 0.1
+            loyalty_all: -0.04
+    - text: "Refuse. Merit is earned, not demanded."
+      skill_check: authority
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            Your refusal is firm and public. The ambitious one slinks
+            away. The message is clear: power is not seized here.
+            Some respect you more for it. Others fear you.
+          effects:
+            stability: 0.02
+            chaos: -0.03
+        failure:
+          text: >
+            Your refusal is seen as petty. "He fears competition," people
+            whisper. The ambitious one leaves with five followers to
+            start their own camp within sight of yours.
+          effects:
+            population: -5
+            chaos: 0.15
+            stability: -0.05
+    - text: "Create a challenge. Let them prove themselves publicly."
+      skill_check: pragmatism
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            The challenge — a hunt, a construction, a negotiation — draws
+            a crowd. The ambitious one succeeds and earns their place
+            honestly. Competition has become institution. You have
+            invented meritocracy.
+          effects:
+            stability: 0.04
+            knowledge: 1
+            law: "Leadership is earned through demonstrated merit"
+          assign_role: council_member
+        failure:
+          text: >
+            The challenge goes wrong. The ambitious one is humiliated
+            publicly and blames you for rigging it. The crowd is divided.
+            What was meant to unify has deepened the fracture.
+          effects:
+            chaos: 0.12
+            loyalty_all: -0.06
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_sickness
+  conditions:
+    tier: 3
+    turn_min: 10
+    min_population: 6
+  text: >
+    It starts with a cough. Within three days, half the settlement is
+    feverish. Children are worst affected. {npc} tends to the sick, but
+    there is no medicine, no knowledge of herbs beyond trial and error.
+    Death feels close. The settlement holds its breath.
+  choices:
+    - text: "Quarantine the sick. Isolation protects the healthy."
+      skill_check: pragmatism
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            The quarantine holds. The sick recover slowly, tended by
+            volunteers who risk their own health. Only one is lost.
+            The settlement has learned that discipline saves lives.
+          effects:
+            population: -1
+            stability: 0.03
+            chaos: -0.03
+            knowledge: 1
+        failure:
+          text: >
+            The quarantine is resented. "You lock away the sick like
+            animals!" Families break through to tend their own. The
+            illness spreads further. More are lost.
+          effects:
+            population: -3
+            chaos: 0.12
+            stability: -0.05
+    - text: "Venture into the forest yourself to find healing herbs."
+      skill_check: courage
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You return with armfuls of herbs — some effective, some
+            useless, but your willingness to risk yourself changes
+            how they see you. The fever breaks. You have become
+            healer as well as philosopher.
+          effects:
+            population: -1
+            stability: 0.04
+            knowledge: 2
+        failure:
+          text: >
+            The herbs you find are wrong. Two more die from the
+            treatment itself. Your confidence is shaken. So is theirs.
+          effects:
+            population: -3
+            chaos: 0.1
+            loyalty_all: -0.06
+    - text: "Delegate to whoever claims knowledge of healing."
+      skill_check: wisdom
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            An old woman steps forward. She knows roots and bark from
+            the cave's edges. Her remedies are crude but effective.
+            She becomes the settlement's first healer — a role no
+            philosopher thought to create.
+          effects:
+            population: -1
+            stability: 0.02
+          assign_role: healer
+        failure:
+          text: >
+            The self-proclaimed healer's remedies do nothing. People
+            lose faith in delegation itself. "No one knows anything
+            out here," they mutter. The sick suffer on.
+          effects:
+            population: -2
+            chaos: 0.08
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_debate
+  conditions:
+    tier: 3
+    turn_min: 10
+    required_milestones: [council, first_law]
+  text: >
+    The council calls an open gathering. The question is simple but
+    enormous: "What kind of society are we building?" {npc} argues for
+    equality — all share equally, all decide equally. Another voice
+    demands hierarchy — the skilled should lead, the strong should
+    protect. A third wants only to be left alone. The fire crackles
+    between them.
+  choices:
+    - text: "Moderate the debate. Guide them toward a middle path."
+      skill_check: rhetoric
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You speak of balance. Of the craftsman and the guardian, the
+            farmer and the thinker. Each has a role; none is above the
+            other. It is the Republic in embryo — imperfect, argued over,
+            alive. The debate ends not in agreement, but in respect.
+          effects:
+            stability: 0.04
+            knowledge: 2
+            chaos: -0.04
+        failure:
+          text: >
+            Your moderation is seen as weakness. "Pick a side!" someone
+            shouts. The debate degenerates into faction. Three camps
+            form where one society should stand.
+          effects:
+            chaos: 0.12
+            stability: -0.04
+    - text: "Let them argue. Democracy is messy — let it be messy."
+      skill_check: wisdom
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            Hours pass. Voices rise and fall. Insults are thrown, then
+            retracted. By dawn, exhaustion has forged a rough consensus:
+            shared labor, earned leadership, protected freedom. It is
+            ugly and human and it is theirs.
+          effects:
+            stability: 0.03
+            knowledge: 1
+            law: "All citizens may speak at the gathering"
+        failure:
+          text: >
+            The argument never ends. It becomes a wound that reopens
+            daily. Every decision is now contested. Every action is
+            questioned. Paralysis sets in.
+          effects:
+            chaos: 0.1
+            stability: -0.03
+    - text: "Dictate the answer. You are the philosopher — you know what is just."
+      skill_check: authority
+      difficulty: 7
+      chaos_delta: 0.1
+      outcomes:
+        success:
+          text: >
+            You speak for an hour. Of justice, of the soul, of the city
+            that mirrors it. They listen — not because they agree, but
+            because your vision is the only complete one. A structure
+            emerges from your words. It will be tested, but it stands.
+          effects:
+            stability: 0.05
+            knowledge: 2
+            loyalty_all: -0.06
+        failure:
+          text: >
+            "Tyrant," someone whispers. Then louder. The word spreads
+            like fire. You have shown them exactly what they feared:
+            a philosopher who believes his truth is the only truth.
+          effects:
+            chaos: 0.2
+            stability: -0.08
+            loyalty_all: -0.1
+    - text: "Retreat to the cave."
+      special: retreat

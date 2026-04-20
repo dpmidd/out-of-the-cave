@@ -1,0 +1,17 @@
+[project]
+name = "out-of-the-cave"
+version = "0.1.0"
+description = "A terminal text adventure where you play as Plato, leading cave-dwellers to build civilization"
+requires-python = ">=3.11"
+dependencies = [
+    "rich>=13.0",
+    "pydantic>=2.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+ai = ["anthropic>=0.40"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+cave = "src.main:main"

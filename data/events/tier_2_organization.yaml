@@ -1,0 +1,278 @@
+- id: first_law
+  conditions:
+    tier: 2
+    blocked_by_milestones: [first_law]
+  text: >
+    A dispute over sleeping spots escalates into a brawl. One man claims
+    the flattest ground near the fire. Another says he gathered the wood
+    and deserves it. A third simply shoves them both aside. {npc} pulls
+    you in: "Plato, if you are to lead us, then lead. Make a rule.
+    Any rule. Before someone dies over a patch of dirt."
+  choices:
+    - text: "Establish the first law: shared resources belong to all. No one claims more than their share."
+      skill_check: rhetoric
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            The crowd listens. It is not perfect — some mutter about who
+            defines a 'share' — but the fighting stops. For the first time,
+            an idea holds more power than a fist. You have planted the seed
+            of a social contract.
+          effects:
+            stability: 0.05
+            chaos: -0.05
+            law: "Shared resources belong to all equally"
+          history_flag: conflict_resolved
+        failure:
+          text: >
+            Your proposed law is met with scorn. "Easy for the philosopher
+            to preach sharing," someone snaps. The fighting resumes. You
+            have revealed the gap between ideas and authority.
+          effects:
+            chaos: 0.1
+    - text: "Appoint the strongest as an enforcer. Order through power."
+      skill_check: authority
+      difficulty: 5
+      chaos_delta: 0.1
+      outcomes:
+        success:
+          text: >
+            The enforcer separates the brawlers. Peace returns — the peace
+            of submission. It is not the republic you imagined, but it
+            functions. For now.
+          effects:
+            stability: 0.03
+            law: "The enforcer keeps peace by strength"
+          assign_role: enforcer
+        failure:
+          text: >
+            The appointed enforcer turns the role to his own advantage,
+            claiming the best spot for himself. You have created a tyrant
+            in miniature.
+          effects:
+            chaos: 0.15
+            loyalty_all: -0.08
+    - text: "Let them fight. The strong will sort it out."
+      skill_check: courage
+      difficulty: 3
+      outcomes:
+        success:
+          text: >
+            The brawl burns itself out. A rough hierarchy emerges — not
+            just, but stable. Sometimes order grows from the ground up.
+          effects:
+            stability: 0.02
+        failure:
+          text: >
+            The fight worsens. Someone pulls a sharpened stick. Blood
+            is drawn. The first wound of your new society.
+          effects:
+            population: -1
+            chaos: 0.12
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: scouting_party
+  conditions:
+    tier: 2
+    required_milestones: [fire]
+    blocked_by_milestones: [explored]
+  text: >
+    From the hilltop, you can see farther than anyone in the group has ever
+    looked. Rolling green land stretches to the south. A dark line of forest
+    sits to the west. To the east, what might be smoke — or mist — rises
+    above a distant ridge. {npc} stands beside you. "We cannot stay in this
+    one spot forever. Someone should go look."
+  choices:
+    - text: "Go yourself. A leader should know the land he asks others to settle."
+      skill_check: courage
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You return after a day's walk with knowledge that changes everything:
+            a fertile valley to the south, a clay deposit by the river, and signs
+            of wild goats on the hillside. The land is generous — if you know
+            where to look.
+          effects:
+            food: 3
+            stability: 0.03
+            knowledge: 1
+          history_flag: explored
+        failure:
+          text: >
+            You get turned around in the forest. Night falls before you find
+            your way back. The camp panicked in your absence — someone had to
+            take charge, and they resented having to.
+          effects:
+            chaos: 0.1
+            loyalty_all: -0.03
+    - text: "Send the sharpest-eyed person you have. You're needed here."
+      skill_check: wisdom
+      difficulty: 3
+      outcomes:
+        success:
+          text: >
+            Your scout returns with a rough map scratched into bark. There is
+            a valley, a river, a ridge with a view for miles. Possibilities
+            unfold. The group feels less like refugees and more like settlers.
+          effects:
+            stability: 0.03
+            knowledge: 1
+          history_flag: explored
+          assign_role: scout
+        failure:
+          text: >
+            The scout returns with little useful information — they were too
+            afraid to venture far. The unknown remains unknown.
+          effects:
+            chaos: 0.04
+    - text: "We stay put. There's enough to deal with here."
+      outcomes:
+        success:
+          text: >
+            The group focuses inward. There is comfort in the familiar camp,
+            even if it is cramped. But the horizon will wait only so long.
+          effects:
+            stability: 0.01
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: who_speaks_for_us
+  conditions:
+    tier: 2
+    required_milestones: [first_law]
+  text: >
+    The first law was a beginning. But now disputes arise daily — who
+    hunts, who guards, who tends the fire while others sleep. {npc}
+    calls an informal gathering. "One person cannot decide everything.
+    We need voices. People who represent the rest of us." The crowd
+    murmurs agreement. They are looking at you to structure this.
+  choices:
+    - text: "Appoint a council of three. Choose the wisest among them."
+      skill_check: wisdom
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You select three: one respected for labor, one for speech,
+            one for courage. It is a crude senate, but they meet each
+            morning and the decisions they make carry weight. You have
+            created representation.
+          effects:
+            stability: 0.04
+            chaos: -0.04
+          assign_role: council_member
+        failure:
+          text: >
+            Your choices are questioned. "Why them? Why not me?" The
+            council forms but is immediately undermined by jealousy.
+          effects:
+            chaos: 0.08
+            loyalty_all: -0.04
+    - text: "Let the people choose their own representatives. A vote."
+      skill_check: rhetoric
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            The concept of voting is alien to them, but you explain it
+            simply: each person speaks a name, and the names spoken most
+            become the voices of all. It is messy, loud, beautiful. Democracy
+            in its most fragile infancy.
+          effects:
+            stability: 0.05
+            chaos: -0.05
+            law: "Leaders are chosen by the voices of the people"
+          assign_role: council_member
+        failure:
+          text: >
+            The vote devolves into a popularity contest. The loudest
+            voices win, not the wisest. The "council" is a clique.
+          effects:
+            stability: 0.01
+            chaos: 0.06
+          assign_role: council_member
+    - text: "You are the voice. A philosopher-king needs no council."
+      skill_check: authority
+      difficulty: 6
+      chaos_delta: 0.15
+      outcomes:
+        success:
+          text: >
+            The crowd accepts it — for now. You hold absolute authority.
+            The decisions come faster, the order is clearer. But something
+            is lost. They follow out of obedience, not belief.
+          effects:
+            stability: 0.03
+            loyalty_all: -0.08
+        failure:
+          text: >
+            "Who made you king?" someone shouts. The crowd shifts. You
+            have overplayed your hand, and the resentment is palpable.
+          effects:
+            chaos: 0.2
+            loyalty_all: -0.12
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: building_together
+  conditions:
+    tier: 2
+    required_milestones: [fire]
+    blocked_by_milestones: [agora]
+  text: >
+    The lean-tos are failing. Wind tears through gaps, rain soaks the
+    sleeping mats. {npc} has been studying how the trees grow — thick
+    trunks, broad leaves — and proposes a plan: "If we work together,
+    really together, we could build something that lasts. Not a lean-to.
+    A structure."
+  choices:
+    - text: "Organize a building effort. Everyone contributes."
+      skill_check: pragmatism
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            It takes three days. Blisters, arguments, a collapsed wall that
+            has to be rebuilt. But when it is done, a rough longhouse stands
+            at the center of camp. It is ugly and imperfect and it is theirs.
+            People sleep dry for the first time.
+          effects:
+            shelter: 3
+            stability: 0.04
+            chaos: -0.04
+        failure:
+          text: >
+            The effort collapses mid-construction. A wall falls and injures
+            two people. Morale sinks. Some say the gods don't want them
+            building here.
+          effects:
+            shelter: 1
+            chaos: 0.08
+            population: -1
+    - text: "Assign roles: cutters, carriers, builders. Specialize the labor."
+      skill_check: authority
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            The division of labor works. People discover they are good at
+            things they never knew existed — shaping wood, mixing clay,
+            weaving roof thatch. Shelter rises, and with it, identity.
+          effects:
+            shelter: 2
+            stability: 0.03
+          assign_role: builder
+        failure:
+          text: >
+            The rigid roles chafe. People assigned to carrying resent those
+            who get to build. The structure is half-finished and no one
+            wants to complete it.
+          effects:
+            shelter: 1
+            chaos: 0.06
+            loyalty_all: -0.03
+    - text: "Retreat to the cave."
+      special: retreat

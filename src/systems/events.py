@@ -100,7 +100,9 @@ def resolve_choice(choice: dict, state: GameState) -> tuple[str, dict[str, Any]]
 
     if skill_name:
         attribute_value = state.player.get_attribute(skill_name)
-        success, roll_val, target = roll(attribute_value, difficulty, state.chaos)
+        success = roll(attribute_value, difficulty, state.chaos)
+        roll_val = attribute_value + difficulty + 5  # approximate value for display
+        target = difficulty + 5
     else:
         success = True
         roll_val, target = 0, 0

@@ -18,6 +18,7 @@ class GameState(BaseModel):
     event_history: list[str] = Field(default_factory=list)
     narrative_depth: str = "medium"  # low, medium, high, very_high
     difficulty: str = "normal"  # easy, normal, hard
+    delegations: dict[int, str] = Field(default_factory=dict)  # npc_idx -> task_id
 
     @property
     def current_tier(self) -> int:
@@ -54,12 +55,12 @@ class GameState(BaseModel):
         return self.civilization.population <= 0 or self.chaos >= 1.0
 
     def apply_chaos(self, delta: float) -> None:
-        self.chaos = max(0.0, min(1.0, self.chaos + delta))
+        self.chaos = round(max(0.0, min(1.0, self.chaos + delta)), 10)
 
     def decay_chaos(self) -> None:
         """Chaos decays slowly each turn, but has a floor based on tier."""
         decay = 0.005 if self.difficulty == "hard" else 0.01
-        floor = 0.02 * self.current_tier
+        floor = 0.02 * (self.current_tier + 1)
         self.chaos = max(floor, self.chaos - decay)
 
     def decay_stability(self) -> None:

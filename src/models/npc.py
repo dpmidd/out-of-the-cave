@@ -5,7 +5,7 @@ class NPC(BaseModel):
     """A cave-dweller following Plato into the light."""
 
     name: str
-    personality: str  # loyalist, skeptic, ambitious, fearful, pragmatist
+    personality: str = "pragmatist"  # loyalist, skeptic, ambitious, fearful, pragmatist
     skills: dict[str, int] = Field(default_factory=dict)  # labor, rhetoric, combat, wisdom, scouting
     loyalty: float = Field(default=0.5, ge=0.0, le=1.0)
     alive: bool = True

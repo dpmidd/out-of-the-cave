@@ -481,3 +481,581 @@
             loyalty_all: -0.1
     - text: "Retreat to the cave."
       special: retreat
+
+- id: the_healer_and_the_dying
+  conditions:
+    tier: 3
+    turn_min: 10
+    required_milestones: [sustenance]
+  text: >
+    {npc} is a healer — the best the settlement has. But they are facing
+    something they cannot heal. Someone lies dying, slowly, painfully. The
+    healer approaches you: "I can end their suffering with what I know. But
+    is that my right? Is that justice?"
+  choices:
+    - text: "Authorize mercy with courage — support the healer's choice."
+      skill_check: courage
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You place your hand on the healer's shoulder: "Ending suffering
+            is a form of healing. Your judgment is sound." They act. The dying
+            person passes gently. The healer is relieved, not guilty.
+          effects:
+            population: -1
+            knowledge: 1
+            stability: 0.02
+        failure:
+          text: >
+            Your support is unconvincing. The healer doubts, hesitates. The
+            person's final hours are prolonged agony. The healer carries guilt.
+          effects:
+            population: -1
+            chaos: 0.06
+    - text: "Argue for life with wisdom — there is no such thing as terminal here."
+      skill_check: wisdom
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You speak to the healer about resilience, about miracles they have
+            seen. You offer palliatives, presence, ritual. The dying person
+            surprises everyone and recovers, slowly. Life persists.
+          effects:
+            knowledge: 1
+            population: 1
+            stability: 0.03
+        failure:
+          text: >
+            The person dies anyway, prolonged and painful. Your insistence on
+            hope becomes its own cruelty. The healer blames you for the suffering.
+          effects:
+            population: -2
+            chaos: 0.08
+    - text: "Leave it to the healer with pragmatism — this is their domain."
+      skill_check: pragmatism
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You step back. "You know this better than I do. I trust your judgment."
+            Relieved of the burden of your approval or judgment, the healer makes
+            a clear choice. The death is merciful.
+          effects:
+            population: -1
+            knowledge: 2
+        failure:
+          text: >
+            The healer freezes without your guidance. The person dies in confusion.
+            The healer wonders what they should have done.
+          effects:
+            population: -1
+            chaos: 0.05
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_dissenting_council_member
+  conditions:
+    tier: 3
+    turn_min: 11
+    required_milestones: [council]
+    chaos_delta: 0.1
+  text: >
+    One of your chosen council members has become a problem. They question
+    every decision, block progress, speak openly about corruption. {npc}
+    asks: "Are they keeping us honest? Or are they a wrench in the works?"
+  choices:
+    - text: "Remove them with authority — disagreement becomes obstruction."
+      skill_check: authority
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You strip their council seat in a public proceeding. The message
+            is clear: loyalty is not optional. Others fall in line. The council
+            becomes efficient but hollow.
+          effects:
+            stability: 0.03
+            history_flag: council_purged
+        failure:
+          text: >
+            The removal backfires. People rally around the dissident. You are
+            suddenly the tyrant they feared. The council fractures.
+          effects:
+            chaos: 0.12
+            stability: -0.03
+    - text: "Embrace their critique with wisdom and reform the council."
+      skill_check: wisdom
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You meet the dissident privately, listen fully. You find truth in
+            their words. You propose reforms: rotation, transparency, veto
+            power for minorities. The council becomes stronger. The dissident
+            becomes an ally.
+          effects:
+            stability: 0.04
+            history_flag: council_reform
+        failure:
+          text: >
+            You try to embrace their critique, but it goes too far. Other
+            council members feel betrayed. The proposed reforms look like
+            capitulation. Internal warfare begins.
+          effects:
+            chaos: 0.1
+            stability: -0.02
+    - text: "Use rhetoric to defend the council's good faith."
+      skill_check: rhetoric
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You speak publicly about why the council makes the decisions it does.
+            You acknowledge the difficulty, the moral weight. The dissident is
+            heard, but understood, not vindicated. Balance holds.
+          effects:
+            stability: 0.02
+            history_flag: council_reform
+        failure:
+          text: >
+            Your rhetoric sounds defensive, evasive. The dissident tears apart
+            your logic publicly. Your credibility suffers.
+          effects:
+            chaos: 0.08
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_traders
+  conditions:
+    tier: 3
+    turn_min: 12
+    required_milestones: [explored]
+    blocked_by_milestones: [agora]
+  text: >
+    Travelers from the south have arrived, carrying goods unlike anything the
+    settlement has seen — tools of fine craft, cloth of strange weave, spices.
+    They want to trade for food and shelter. {npc} is excited: "Do we trade
+    with them? How do we trust a stranger?"
+  choices:
+    - text: "Welcome the traders with open rhetoric."
+      skill_check: rhetoric
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You greet the traders warmly, negotiate generously. They are delighted.
+            Trade is established. Within days, the settlement has resources it
+            never imagined. Word spreads — merchants will come here.
+          effects:
+            food: 3
+            knowledge: 1
+          history_flag: first_trade
+        failure:
+          text: >
+            Your welcome is too enthusiastic. The traders think you are desperate
+            and demand outrageous terms. You agree just to get them to leave. Bad
+            precedent is set.
+          effects:
+            food: 1
+            stability: -0.02
+    - text: "Approach with caution and wisdom — verify their claims first."
+      skill_check: wisdom
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You ask careful questions, verify their goods' quality, understand
+            their business practices. You trade cautiously, small amounts. Trust
+            builds slowly but solidly.
+          effects:
+            food: 2
+            knowledge: 2
+          history_flag: first_trade
+        failure:
+          text: >
+            Your caution offends them. They feel distrusted and leave. Other
+            settlements will welcome them. Opportunity lost.
+          effects:
+            knowledge: 1
+            stability: -0.01
+    - text: "Trade pragmatically — take what you need, negotiate hard."
+      skill_check: pragmatism
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You drive a shrewd bargain. The traders respect the toughness. They
+            return with better goods the next season. Trade becomes regular,
+            mutually beneficial.
+          effects:
+            food: 3
+            knowledge: 1
+          history_flag: first_trade
+        failure:
+          text: >
+            You over-negotiate. The traders feel cheated and warn other merchants
+            away. They do not return.
+          effects:
+            food: 2
+            knowledge: 1
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_children
+  conditions:
+    tier: 3
+    turn_min: 13
+    required_milestones: [first_night, sustenance]
+  text: >
+    {npc} tells you something is wrong with the children. They are not playing
+    the way children should. Instead, they huddle together and reenact the cave
+    — playing at searching, hiding, emerging. When asked, they speak of the
+    darkness as a living thing. "The children are making it real again,"
+    {npc} says. "What do we do?"
+  choices:
+    - text: "Rewrite the narrative with rhetoric and storytelling."
+      skill_check: rhetoric
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You gather the children and tell them a different story — one where
+            the cave was a trial, a cocoon, a place of preparation. You speak of
+            the emergence as triumph. They listen, rapt. The next day, their play
+            changes — now they are explorers, builders, not refugees.
+          effects:
+            knowledge: 2
+            stability: 0.04
+          history_flag: cave_mythologized
+        failure:
+          text: >
+            The children do not believe your story. It sounds like you are hiding
+            something from them. Their imaginings grow darker.
+          effects:
+            chaos: 0.08
+    - text: "Let them process the trauma with wisdom — acknowledge the fear."
+      skill_check: wisdom
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You speak with the children honestly: "The cave was scary. It was
+            real. But you were brave, and now you are here." You listen to their
+            fears, validate them. Slowly, they stop reenacting and start creating
+            new stories.
+          effects:
+            knowledge: 1
+            stability: 0.03
+            population: 1
+          history_flag: cave_mythologized
+        failure:
+          text: >
+            The children sense your discomfort and clam up. They process alone,
+            in their games. The mythology of the cave grows without your input.
+          effects:
+            stability: -0.01
+    - text: "Address it with authority — teach them the real history."
+      skill_check: authority
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You gather the children formally and speak of the cave as history, not
+            nightmare. "This is what happened. This is what we did. This is who
+            you are." The past is integrated. The children move forward.
+          effects:
+            knowledge: 1
+            stability: 0.04
+          history_flag: cave_mythologized
+        failure:
+          text: >
+            Your formal approach is too cold. The children feel lectured and
+            dismissed. They return to their games even more intensely.
+          effects:
+            chaos: 0.06
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_price_of_order
+  conditions:
+    tier: 3
+    turn_min: 14
+    chaos_min: 0.15
+    required_milestones: [first_law]
+    chaos_delta: 0.05
+  text: >
+    A law has been broken — someone stole food from the communal store. The
+    council meets, and the verdict is swift: exile. But {npc} brings the case
+    to you: "They were hungry. Their family was starving. The law says no, but
+    justice says... what?"
+  choices:
+    - text: "Stand by the law with rhetoric — order requires consistency."
+      skill_check: rhetoric
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You argue eloquently that a law unenforced is no law at all. "If this
+            theft goes unpunished, then theft is permitted. Then there is no order,
+            only chaos." The exile stands. Order holds, hard and clear.
+          effects:
+            law: "Punishment is proportional to harm done"
+            stability: 0.04
+            population: -1
+          history_flag: law_upheld
+        failure:
+          text: >
+            Your rhetoric rings hollow. The person was hungry. Everyone knows it.
+            Your defense of the law sounds like cruelty in a nice voice.
+          effects:
+            chaos: 0.1
+            stability: -0.02
+    - text: "Overrule the council with wisdom — mercy is also order."
+      skill_check: wisdom
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You intervene: "A law that cannot bend for hunger is a law written by
+            the already-fed." You reduce the punishment to restitution. The person
+            stays, works, repays. Justice is served without cruelty.
+          effects:
+            law: "Punishment is proportional to harm done"
+            stability: 0.04
+            knowledge: 1
+          history_flag: law_upheld
+        failure:
+          text: >
+            Your mercy is seen as weakness. The council resists, the settlement
+            is split. The very law crumbles under challenge.
+          effects:
+            chaos: 0.12
+            stability: -0.03
+    - text: "Find a compromise with pragmatism — exile them but with resources."
+      skill_check: pragmatism
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You exile the person as the law demands, but you give them supplies
+            and knowledge for survival. They leave with some dignity. The law is
+            satisfied, and so is mercy.
+          effects:
+            law: "Punishment is proportional to harm done"
+            stability: 0.02
+            population: -1
+          history_flag: law_upheld
+        failure:
+          text: >
+            The exile resents the superficial mercy. They spread word of the
+            settlement's coldness. Trust erodes both internally and externally.
+          effects:
+            chaos: 0.08
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_memory_keeper
+  conditions:
+    tier: 3
+    turn_min: 15
+    blocked_by_milestones: [education]
+  text: >
+    {npc} has taken on a role no one assigned: keeper of stories. They sit by
+    the fire each night and tell what they remember — the cave, the escape, the
+    first season. But they are getting old, and the work is hard. They ask: "If
+    I stop, will all of this be forgotten?"
+  choices:
+    - text: "Teach them with wisdom — find them an apprentice."
+      skill_check: wisdom
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You identify someone with a gift for memory and sit them together at
+            the fire. The stories are passed down. The elder rests, knowing the
+            work continues. A tradition is born.
+          effects:
+            knowledge: 2
+            population: -1
+          history_flag: oral_history_preserved
+        failure:
+          text: >
+            The apprentice you choose is not interested. The elder's stories fade
+            into silence. A world is lost.
+          effects:
+            knowledge: -1
+            population: -1
+    - text: "Organize formal storytelling with rhetoric and ceremony."
+      skill_check: rhetoric
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You establish a ceremony — the elder speaks, the settlement listens,
+            together. The stories become collective property, not individual
+            burden. The elder tells, lighter now.
+          effects:
+            knowledge: 1
+            stability: 0.03
+            population: -1
+          history_flag: oral_history_preserved
+        failure:
+          text: >
+            The ceremony feels performative, forced. The stories lose their
+            intimacy. The elder withdraws, hurt.
+          effects:
+            knowledge: 1
+            population: -1
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_zealot
+  conditions:
+    tier: 3
+    turn_min: 16
+    chaos_min: 0.2
+    min_population: 8
+    chaos_delta: 0.1
+  text: >
+    A voice has emerged among the settlement — loud, charismatic, speaking of
+    gods and spirits. They claim the cave was sacred, the darkness was divine,
+    and emergence was a mistake. Followers gather. {npc} watches with concern:
+    "They are sincere, but they are sowing doubt. What do we do with true belief
+    we do not share?"
+  choices:
+    - text: "Debate them with rhetoric about reason and evidence."
+      skill_check: rhetoric
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You engage the zealot directly, respectfully, but firmly. You speak
+            of what can be tested, what can be known. Some followers slip away.
+            The zealot is diminished, but not destroyed. Reason survives.
+          effects:
+            chaos: -0.06
+            knowledge: 1
+          history_flag: superstition_defeated
+        failure:
+          text: >
+            Your rhetoric is too abstract. The zealot counters with passion. You
+            lose the crowd. More join them.
+          effects:
+            chaos: 0.15
+    - text: "Suppress them with authority — no false prophets in this settlement."
+      skill_check: authority
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You exile the zealot. Their followers are scattered and shamed.
+            Superstition is crushed. But something is also lost — people remember
+            they are afraid of the darkness.
+          effects:
+            chaos: -0.04
+            stability: 0.01
+            population: -1
+          history_flag: superstition_defeated
+        failure:
+          text: >
+            The exile makes them a martyr. They return with followers, and their
+            story is more powerful now — a prophet persecuted by the tyrant.
+          effects:
+            chaos: 0.2
+    - text: "Channel their fervor with wisdom — turn belief toward the future."
+      skill_check: wisdom
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You speak with the zealot alone, listening. You find common ground —
+            yes, the cave was profound; yes, emergence is sacred. But the sacred
+            is in what you build now, together. They become a builder instead of
+            a prophet.
+          effects:
+            chaos: -0.05
+            knowledge: 1
+            stability: 0.03
+          history_flag: superstition_defeated
+        failure:
+          text: >
+            Your attempt at synthesis is rejected. The zealot sees it as
+            corruption. They harden and withdraw, taking followers with them.
+          effects:
+            chaos: 0.12
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_spoken_law
+  conditions:
+    tier: 3
+    turn_min: 17
+    required_milestones: [council, first_law]
+  text: >
+    {npc} brings a proposal to the council: laws should be written, not just
+    spoken. "If they are written, they cannot be twisted. They are real." But
+    others resist — writing is sacred, difficult, and who decides what the law
+    truly means once it is frozen in symbols?
+  choices:
+    - text: "Support the proposal with pragmatism — written law is clearer."
+      skill_check: pragmatism
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You organize the effort. Laws are carved into stone or written on
+            hide. They are read aloud regularly. Suddenly, everyone knows what is
+            forbidden and why. Justice becomes more consistent.
+          effects:
+            law: "The written law is the final authority"
+            knowledge: 2
+          history_flag: laws_written
+        failure:
+          text: >
+            The writing effort is plagued with disputes. Who writes? What symbols?
+            What if someone misreads? The project stalls.
+          effects:
+            stability: -0.02
+    - text: "Argue for preserving oral tradition with wisdom."
+      skill_check: wisdom
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You argue that laws must live in memory, in interpretation, in the
+            community's ongoing conversation. Writing freezes them, kills them.
+            The council embraces this. Law becomes more fluid, more just.
+          effects:
+            knowledge: 1
+            stability: 0.03
+          history_flag: laws_written
+        failure:
+          text: >
+            Your argument is heard as resistance to change. The council wants
+            progress, not philosophical defense of the old way. You are sidelined.
+          effects:
+            stability: -0.02
+    - text: "Propose a hybrid with rhetoric — write the law, but read it aloud."
+      skill_check: rhetoric
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You craft a compromise: laws are written for permanence, but read
+            aloud regularly so they live in speech. Both camps accept this bridge.
+            Law becomes solid yet living.
+          effects:
+            law: "The written law is the final authority"
+            knowledge: 2
+            stability: 0.03
+          history_flag: laws_written
+        failure:
+          text: >
+            The hybrid pleases no one. It is seen as half-measures. Both sides
+            grow impatient with your moderation.
+          effects:
+            stability: -0.01
+    - text: "Retreat to the cave."
+      special: retreat

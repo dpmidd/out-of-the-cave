@@ -1,0 +1,651 @@
+- id: the_first_generation
+  conditions:
+    tier: 5
+    turn_min: 20
+    required_milestones: [education, allegory_taught]
+  text: >
+    {npc} has never known the cave. They were born outside, under open sky,
+    to parents who escaped the darkness. Now, standing at the edge of the
+    settlement, looking back at the fire that changed everything, they ask:
+    "What do I owe this place? They gave me life, yes — but what kind of life
+    do I build from here?"
+  choices:
+    - text: "Teach them the story of emergence with wisdom."
+      skill_check: wisdom
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You speak of the journey — not as triumph, but as burden passed
+            forward. Their role is not to repeat it, but to honor it by
+            becoming something the cave-dwellers could not imagine. They
+            understand. A generation takes its shape.
+          effects:
+            stability: 0.05
+            knowledge: 2
+          history_flag: next_generation_acknowledged
+        failure:
+          text: >
+            Your words are too heavy. They hear only obligation and chains.
+            Resentment grows toward the founders, toward the cave itself.
+          effects:
+            chaos: 0.08
+            knowledge: 1
+    - text: "Challenge them through rhetoric to transcend the founders."
+      skill_check: rhetoric
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You speak of legacy as a foundation, not a prison. "Go beyond us.
+            That is what we built all this for — so you could go further." They
+            stand taller. The future becomes theirs to write.
+          effects:
+            stability: 0.04
+            knowledge: 2
+          history_flag: next_generation_acknowledged
+        failure:
+          text: >
+            Your words sound like dismissal. They hear "go away, leave us alone."
+            The generation drifts, unmoored, without guidance.
+          effects:
+            stability: -0.02
+    - text: "Give them the right to choose their own path, not yours."
+      skill_check: pragmatism
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You step back. "You owe nothing. Not to us, not to the cave. You
+            are free to be what you choose — and that freedom is the only thing
+            worth inheriting." They build with purpose. A generation claims
+            agency.
+          effects:
+            stability: 0.04
+            knowledge: 2
+          history_flag: next_generation_acknowledged
+        failure:
+          text: >
+            Without guidance, without structure, they flounder. Freedom without
+            context feels like abandonment. Chaos spreads.
+          effects:
+            chaos: 0.1
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_faction_of_the_pure
+  conditions:
+    tier: 5
+    turn_min: 15
+    chaos_min: 0.2
+    required_milestones: [philosopher_king]
+    chaos_delta: 0.1
+  text: >
+    A faction has emerged — those who believe the settlement has strayed from
+    the original purity of the founding. They speak of returning to the cave,
+    to simplicity, to the old ways. They are not hostile, not yet, but their
+    rhetoric is sharp: "We were meant to be philosophers, not merchants. We
+    were meant to think, not accumulate."
+  choices:
+    - text: "Refute them with rhetoric about civilization's necessity."
+      skill_check: rhetoric
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You speak eloquently about how philosophy requires shelter, food,
+            time — that civilization is not a betrayal but a foundation for
+            thought. Some are convinced. Others remain unsatisfied but silent.
+          effects:
+            stability: 0.03
+            law: "Citizenship is granted by service, not by birth"
+        failure:
+          text: >
+            Your rhetoric is too abstract. The faction interprets your words as
+            arrogance. Their numbers grow. Discontent hardens into resentment.
+          effects:
+            chaos: 0.18
+    - text: "Acknowledge their concerns with wisdom and find synthesis."
+      skill_check: wisdom
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You acknowledge the truth in their words — yes, something pure has
+            been diluted. But you propose a synthesis: meditation chambers
+            within the marketplace, philosophy as a citizen's right. They accept
+            this bridge. Unity holds, if fragile.
+          effects:
+            stability: 0.02
+            law: "Citizenship is granted by service, not by birth"
+        failure:
+          text: >
+            Your attempt at synthesis pleases no one fully. The faction sees it
+            as appeasement, and others see it as weakness. Internal tension
+            rises.
+          effects:
+            chaos: 0.15
+    - text: "Assert absolute authority — the age of debate is over."
+      skill_check: authority
+      difficulty: 8
+      outcomes:
+        success:
+          text: >
+            You speak with finality: "Philosophy without power is dreaming. We
+            have chosen civilization, and we will not unmake it." The faction
+            quiets, respects strength. Order holds through will.
+          effects:
+            stability: 0.04
+            loyalty_all: -0.06
+            law: "Citizenship is granted by service, not by birth"
+        failure:
+          text: >
+            Your assertion of authority backfires. It proves their point — that
+            power has corrupted the original vision. The faction's ideology
+            spreads. Chaos escalates.
+          effects:
+            chaos: 0.25
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_long_peace
+  conditions:
+    tier: 5
+    turn_min: 18
+    chaos_max: 0.25
+    required_milestones: [philosopher_king, constitution]
+  text: >
+    For the first time since emergence, there have been no deaths from conflict.
+    No laws broken. No violence. The season turns gentle. {npc} observes it with
+    both wonder and suspicion: "Is this peace? Or are we just holding our breath
+    before the storm?"
+  choices:
+    - text: "Consolidate the peace with wisdom, make it deliberate."
+      skill_check: wisdom
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You speak of peace not as luck but as choice, requiring constant
+            renewal. You establish rituals of reconciliation, spaces for
+            grievance. The peace deepens because it is tended.
+          effects:
+            stability: 0.05
+            chaos: -0.04
+        failure:
+          text: >
+            Your emphasis on deliberate peace sounds paranoid. People relax
+            instead. The systems you propose are ignored.
+          effects:
+            stability: 0.01
+    - text: "Celebrate the peace through rhetoric and festivals."
+      skill_check: rhetoric
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You declare a celebration — games, feasting, storytelling. The
+            settlement marks the peace as sacred. People remember this moment.
+            It becomes part of the identity.
+          effects:
+            stability: 0.04
+            knowledge: 1
+            chaos: -0.03
+        failure:
+          text: >
+            The festival feels performative, empty. People sense you are
+            distracted, worried. Joy turns hollow.
+          effects:
+            stability: 0.01
+            chaos: 0.05
+    - text: "Test the peace, verify it with pragmatism."
+      skill_check: pragmatism
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You quietly test systems — trust between traders, respect of
+            property claims, compliance with law. All hold. The peace is real,
+            not illusion. You can exhale.
+          effects:
+            stability: 0.04
+            chaos: -0.04
+        failure:
+          text: >
+            Your quiet probing is perceived as distrust. People feel
+            scrutinized, controlled. The peace begins to fray.
+          effects:
+            chaos: 0.08
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_dissident_text
+  conditions:
+    tier: 5
+    turn_min: 19
+    required_milestones: [constitution, education]
+    chaos_delta: 0.1
+  text: >
+    Someone has written a text questioning the constitution itself — arguing
+    that absolute rules stifle the human spirit, that law can become tyranny in
+    the name of order. It circulates quietly, hand to hand. {npc} brings it to
+    you: "Do we ban this? Or do we let ideas challenge us?"
+  choices:
+    - text: "Suppress it with authority to protect stability."
+      skill_check: authority
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You confiscate the texts, exile the writer. The dissent is crushed.
+            Order holds, but something dies — the possibility of critique, of
+            growth. The settlement becomes a shell.
+          effects:
+            stability: 0.01
+            knowledge: -1
+        failure:
+          text: >
+            Your suppression fails. The text spreads faster because it is
+            forbidden. Martyrdom makes the dissident a symbol.
+          effects:
+            chaos: 0.12
+            knowledge: -1
+    - text: "Engage the dissident with wisdom and reasoning."
+      skill_check: wisdom
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You meet the writer. You debate — not to refute, but to understand.
+            You both emerge changed. A law is drafted allowing periodic
+            constitutional review. Dissent becomes integral.
+          effects:
+            knowledge: 3
+            law: "No law may be passed without a period of public debate"
+        failure:
+          text: >
+            The debate turns adversarial. You are outmaneuvered. The dissident
+            gains credibility and followers.
+          effects:
+            chaos: 0.1
+            knowledge: 1
+    - text: "Support the dissident publicly with rhetoric."
+      skill_check: rhetoric
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You publicly acknowledge the value of the critique. "A constitution
+            that cannot be questioned is not justice — it is dogma." You create
+            space for dissent. The society strengthens through challenge.
+          effects:
+            knowledge: 3
+            law: "No law may be passed without a period of public debate"
+        failure:
+          text: >
+            Your support is seen as weakness. Conservatives move against both you
+            and the dissident. Internal conflict erupts.
+          effects:
+            chaos: 0.15
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_plague
+  conditions:
+    tier: 5
+    turn_min: 22
+    chaos_min: 0.3
+    required_milestones: [constitution]
+  text: >
+    Sickness spreads through the settlement — a fever that burns hot and fast.
+    People are dying. {npc}, one of the healers, is exhausted: "We have medicine,
+    we have knowledge, but not enough. It takes time, and people are dying now.
+    What do we choose?"
+  choices:
+    - text: "Prioritize survival pragmatically — focus resources on the strongest."
+      skill_check: pragmatism
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You organize triage coldly, systematically. Resources go to those
+            most likely to survive. It works — population is reduced, but the
+            settlement survives intact. But everyone remembers who was left to
+            die.
+          effects:
+            population: -4
+            knowledge: 2
+        failure:
+          text: >
+            The system fails to save enough. People die despite prioritization.
+            And those left unhelped curse you with their final breath.
+          effects:
+            population: -6
+            chaos: 0.15
+    - text: "Fight the plague with wisdom and every tool available."
+      skill_check: wisdom
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You coordinate healers, share resources equally, console the dying.
+            More are lost than the pragmatic approach would have cost — but none
+            are abandoned. The settlement suffers, but its soul remains whole.
+          effects:
+            population: -5
+            knowledge: 3
+            stability: 0.02
+        failure:
+          text: >
+            Despite all effort, the plague overwhelms. The settlement reels from
+            the loss. Survivors question whether wisdom was enough.
+          effects:
+            population: -6
+            chaos: 0.1
+    - text: "Isolate the sick from the healthy, accept casualties."
+      skill_check: courage
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You enforce harsh separation. Yes, the isolated die at higher rates.
+            But the plague does not spread through the whole. The harsh choice
+            saves the many by sacrificing the few.
+          effects:
+            population: -3
+            stability: 0.01
+            knowledge: 2
+        failure:
+          text: >
+            The isolation fails. Both groups get sick. The cruelty was for
+            nothing. Resentment is total.
+          effects:
+            population: -5
+            chaos: 0.2
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_question_of_expansion
+  conditions:
+    tier: 5
+    turn_min: 23
+    required_milestones: [constitution, succession]
+    min_population: 10
+  text: >
+    The settlement has grown. Land has become scarce. {npc} brings a proposal:
+    "There is more land beyond the river, fertile and empty. Should we expand?
+    Or do we remain here, confined, perfecting what we have built?"
+  choices:
+    - text: "Advocate expansion with rhetoric about legacy."
+      skill_check: rhetoric
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You speak of growth as the greatest honor to those who built first.
+            "They freed us from the cave so we could reach further. Let us reach."
+            The settlement expands. New land yields food and hope.
+          effects:
+            food: 8
+            shelter: 2
+            population: 2
+        failure:
+          text: >
+            Your expansion rhetoric sounds like restlessness, dissatisfaction with
+            what exists. People resist. The proposal dies.
+          effects:
+            stability: -0.02
+    - text: "Support expansion pragmatically — it is necessary for growth."
+      skill_check: pragmatism
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You organize the expansion methodically. Scouts, settlers, supply
+            chains. A new settlement rises. The two communities flourish in
+            trade and mutual aid.
+          effects:
+            food: 7
+            shelter: 2
+            population: 1
+        failure:
+          text: >
+            The expansion is poorly planned. Resources stretch thin. The new
+            settlement struggles, and resentment builds between old and new.
+          effects:
+            chaos: 0.08
+    - text: "Argue against expansion with wisdom — let perfection come first."
+      skill_check: wisdom
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You argue that they are not ready, that expansion while internal
+            questions remain will create conflict. The settlement settles,
+            deepens its roots. The pause proves wise — future generation will
+            have what this one could not perfect.
+          effects:
+            stability: 0.04
+            knowledge: 2
+        failure:
+          text: >
+            Your caution is heard as fear. People feel constrained by your
+            hesitation. Resentment builds.
+          effects:
+            chaos: 0.06
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_night_plato_wonders
+  conditions:
+    tier: 5
+    turn_min: 20
+    required_milestones: [philosopher_king]
+  text: >
+    In the depth of night, Plato stands alone at the edge of the settlement,
+    looking back at the fires. He is old now — old enough to remember the
+    first dark. He thinks: Did we build a just society? Or did we simply
+    recreate the cave with different shadows?
+  choices:
+    - text: "Join him, speak wisdom into the darkness."
+      skill_check: wisdom
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You sit in silence, then speak: "We did not build paradise. We built
+            a place where justice is possible. That is enough." He nods, slowly,
+            and the weight seems lighter. Peace settles on him.
+          effects:
+            stability: 0.04
+            chaos: -0.05
+        failure:
+          text: >
+            Your words are too reassuring, too simple. He dismisses you with a
+            look. The doubt remains unfaced.
+          effects:
+            stability: -0.01
+    - text: "Share the doubt with rhetoric — name it honestly."
+      skill_check: rhetoric
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You join him and name the fear aloud: "Yes, maybe we did recreate
+            the cave. But we chose the shadows this time. That choice is the
+            difference." He turns, and for the first time, you see him smile.
+          effects:
+            stability: 0.03
+            chaos: -0.04
+        failure:
+          text: >
+            Your honesty sounds like cynicism. He withdraws further, retreats
+            into solitude with his doubt.
+          effects:
+            stability: -0.02
+    - text: "Leave him to his wondering — some questions are solitary."
+      skill_check: pragmatism
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You recognize that some journeys cannot be shared. You leave Plato
+            to his vigil. By morning, he has found his own answer, and it is
+            stronger for being unsaid. Peace holds.
+          effects:
+            stability: 0.03
+            knowledge: 1
+            chaos: -0.05
+        failure:
+          text: >
+            Your departure feels like abandonment. Plato is left alone with his
+            doubts, and they consume him. His isolation spreads.
+          effects:
+            chaos: 0.08
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_constitution_tested
+  conditions:
+    tier: 5
+    turn_min: 24
+    chaos_min: 0.15
+    required_milestones: [constitution, justice, philosopher_king]
+  text: >
+    A leader has violated the constitution. Not criminally — legally, they've
+    found a loophole, a gap in the language. They used it to expand their power.
+    The settlement is split: some say the letter of the law must hold, others
+    say the spirit of justice was betrayed. {npc} looks to you: "Which do we
+    defend?"
+  choices:
+    - text: "Enforce the law strictly with rhetoric about the rule of law."
+      skill_check: rhetoric
+      difficulty: 8
+      outcomes:
+        success:
+          text: >
+            You argue passionately that law, once surrendered to interpretation,
+            becomes tyranny. "We are ruled by words written, not by will spoken."
+            The settlement accepts the loophole but closes it. The constitution
+            is refined.
+          effects:
+            stability: 0.05
+            law: "The spirit of the law supersedes the letter when the letter fails"
+          history_flag: constitution_prevailed
+        failure:
+          text: >
+            Your defense of strict law sounds like pedantry. People see real
+            injustice and feel betrayed by words. Justice crumbles.
+          effects:
+            chaos: 0.1
+    - text: "Assert that justice supersedes law with wisdom."
+      skill_check: wisdom
+      difficulty: 8
+      outcomes:
+        success:
+          text: >
+            You argue that the constitution was written to serve justice, not the
+            reverse. The loophole is voided. A principle is established: the
+            spirit takes precedence. The system holds, refined by wisdom.
+          effects:
+            stability: 0.06
+            law: "The spirit of the law supersedes the letter when the letter fails"
+          history_flag: constitution_prevailed
+        failure:
+          text: >
+            Your argument is heard as softness. Others find loopholes. Authority
+            erodes. Chaos increases.
+          effects:
+            chaos: 0.15
+    - text: "Use pragmatism to restructure governance to prevent future violations."
+      skill_check: pragmatism
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You propose checks and balances, transparent review processes. The
+            specific violation is addressed through systemic reform. The settlement
+            learns that constitution requires constant maintenance.
+          effects:
+            stability: 0.04
+            law: "The spirit of the law supersedes the letter when the letter fails"
+          history_flag: constitution_prevailed
+        failure:
+          text: >
+            The new systems are too complex. People get lost in procedure. Real
+            justice is delayed. Frustration grows.
+          effects:
+            chaos: 0.08
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_last_lesson
+  conditions:
+    tier: 5
+    turn_min: 25
+    required_milestones: [constitution, succession, allegory_taught, philosopher_king]
+  text: >
+    {npc} comes to you at the end. They are young — born after emergence, who
+    never knew the cave. They will inherit what you built. And they ask the
+    simplest question: "What did you learn that I should know? What is the one
+    thing you would tell me before you go?"
+  choices:
+    - text: "Speak wisdom: the work is never finished."
+      skill_check: wisdom
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You tell them: "Justice is not a destination. It is a practice,
+            renewed every day by people who care. Keep renewing it." They listen,
+            truly listen. The work passes forward.
+          effects:
+            stability: 0.08
+            knowledge: 2
+            chaos: -0.05
+        failure:
+          text: >
+            Your words sound tired. They hear resignation, not wisdom. They leave
+            unsure, without anchor.
+          effects:
+            stability: 0.03
+    - text: "Share rhetoric: tell them the story of how far you came."
+      skill_check: rhetoric
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You recount the journey — the dark, the fire, each step outward. You
+            show them how small choices accumulate into something large. They stand
+            taller, understanding their own power.
+          effects:
+            stability: 0.07
+            knowledge: 1
+            chaos: -0.04
+        failure:
+          text: >
+            The story feels like nostalgia, like looking backward. They need to
+            look forward. Your words anchor them to the past.
+          effects:
+            stability: 0.02
+    - text: "Offer courage: tell them to trust themselves, not you."
+      skill_check: courage
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You tell them: "You will be better than us. Trust that. Make your own
+            way." They leave unburdened, free. That freedom is your greatest gift.
+          effects:
+            stability: 0.06
+            chaos: -0.05
+        failure:
+          text: >
+            Your abdication sounds like you don't care. They are left untethered,
+            without inheritance. Uncertainty spreads.
+          effects:
+            stability: 0.02
+            chaos: 0.08
+  choices:
+    - text: "Retreat to the cave."
+      special: retreat

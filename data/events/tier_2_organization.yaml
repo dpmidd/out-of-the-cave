@@ -276,3 +276,375 @@
             loyalty_all: -0.03
     - text: "Retreat to the cave."
       special: retreat
+
+- id: the_skeptic
+  conditions:
+    tier: 2
+    turn_min: 3
+  text: >
+    A voice emerges from the group — quiet at first, then sharper. "This is
+    the same as before. We huddle, we follow, we pretend it is better. But
+    we are still in the dark, still afraid." {npc} looks at you. "Why should
+    we believe you? Why should we believe any of this is not just a new cave,
+    smaller and colder?"
+  choices:
+    - text: "Answer with rhetoric: paint a vision of what this becomes."
+      skill_check: rhetoric
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            Your words are measured, vivid. You speak not of certainty but of
+            work — something solid enough to hold onto. The skeptic listens,
+            nods slowly. Not convinced, but willing. That is enough.
+          effects:
+            stability: 0.03
+          history_flag: skeptic_answered
+        failure:
+          text: >
+            Your words ring hollow even to you. The skeptic smiles — a small,
+            sad expression. "See? Even you don't believe it." The mood darkens.
+          effects:
+            chaos: 0.12
+            loyalty_all: -0.04
+    - text: "Answer with wisdom: acknowledge the fear is real."
+      skill_check: wisdom
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You speak slowly, honestly. "Yes. Yes, it feels like a smaller
+            cave. But we have each other now, not the stone. And that is the
+            beginning of something." The skeptic's shoulders relax.
+          effects:
+            stability: 0.04
+          history_flag: skeptic_answered
+        failure:
+          text: >
+            Your attempt at honesty sounds like condescension. The skeptic
+            hardens. Others begin to murmur agreement with them.
+          effects:
+            chaos: 0.1
+    - text: "Answer pragmatically: point out those who have benefited."
+      skill_check: pragmatism
+      difficulty: 3
+      outcomes:
+        success:
+          text: >
+            You name specific examples — the shelter, the food stores, the
+            healings. Tangible things. The skeptic cannot argue with lived
+            experience. They settle back, still skeptical but quieter.
+          effects:
+            stability: 0.02
+          history_flag: skeptic_answered
+        failure:
+          text: >
+            You cite examples, but cherry-pick them. The skeptic catches you.
+            "So you have to hide the failures to make it sound good?" Trust erodes.
+          effects:
+            chaos: 0.08
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_naming
+  conditions:
+    tier: 2
+    turn_min: 4
+    required_milestones: [first_law]
+  text: >
+    The settlement has no name. It is still "the camp," "the place," "here."
+    But it is growing — more permanent, more intentional. {npc} raises the
+    question at the evening fire: "If we are going to stay, if this is truly
+    ours, then it needs a name. Something that says what we are."
+  choices:
+    - text: "Name it yourself, invoking authority."
+      skill_check: rhetoric
+      difficulty: 3
+      outcomes:
+        success:
+          text: >
+            You stand and speak a name — brief, resonant, something that
+            captures the defiance and the hope. People repeat it. It sticks.
+            By morning, they are already using it. An identity is born.
+          effects:
+            stability: 0.04
+            knowledge: 1
+          history_flag: named_settlement
+        failure:
+          text: >
+            The name you choose sounds forced, pretentious. People smile and
+            forget it by morning. Identity cannot be imposed.
+          effects:
+            knowledge: 1
+    - text: "Let the settlement name itself through debate."
+      skill_check: wisdom
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You facilitate the discussion. Voices clash, laughter breaks out,
+            finally consensus forms around a name no single person proposed.
+            It belongs to everyone equally. That matters.
+          effects:
+            stability: 0.05
+            knowledge: 1
+          history_flag: named_settlement
+        failure:
+          text: >
+            The debate never settles. Too many voices, too many visions.
+            People get frustrated and drift away. No name emerges, only fatigue.
+          effects:
+            stability: -0.02
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_boundary
+  conditions:
+    tier: 2
+    turn_min: 5
+    required_milestones: [first_law]
+    chaos_delta: 0.1
+  text: >
+    Someone planted seeds yesterday. Today, someone else dug them up and took
+    them. "Those were mine," one says. "Everything here is ours," the other
+    counters. {npc} looks at you: "We have laws for words and duty. Do we have
+    a law for this? What is mine? What is ours?"
+  choices:
+    - text: "Establish property rights through rhetoric and persuasion."
+      skill_check: rhetoric
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You craft a law: "Each person may hold what they labor to build."
+            It is simple, comprehensible, grounded in effort. The dispute
+            resolves. Property is real, now, and it is lawful.
+          effects:
+            law: "Each person may hold what they labor to build"
+            stability: 0.03
+          history_flag: property_defined
+        failure:
+          text: >
+            Your attempt to mediate pleases no one. Both parties feel cheated.
+            The resentment hardens. Someone else steals in retaliation.
+          effects:
+            chaos: 0.08
+    - text: "Decide through authority: declare the law yourself."
+      skill_check: authority
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You declare the law with authority and enforce it immediately.
+            The settlement accepts it, partly from respect, partly from fear.
+            Property is established, though resentment smolders.
+          effects:
+            law: "Each person may hold what they labor to build"
+            stability: 0.02
+            loyalty_all: -0.05
+          history_flag: property_defined
+        failure:
+          text: >
+            You attempt to impose authority, but the settlement is not yet
+            ready to be ruled. They resist, argue, and the law fails to take
+            root. Chaos increases.
+          effects:
+            chaos: 0.15
+    - text: "Propose a compromise with wisdom: some things are personal, some communal."
+      skill_check: wisdom
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You frame it clearly: certain tools, certain shelters are personal;
+            food stores and building materials remain communal. The distinction
+            is honored. Property is partial, but it is clear.
+          effects:
+            law: "Each person may hold what they labor to build"
+            stability: 0.04
+          history_flag: property_defined
+        failure:
+          text: >
+            The distinction is too subtle. People squabble over which things are
+            which. The law sows more confusion than clarity.
+          effects:
+            chaos: 0.06
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_mourning
+  conditions:
+    tier: 2
+    turn_min: 6
+    blocked_by_milestones: [council]
+  text: >
+    {npc} is gone. An illness, fast and brutal. The settlement has no rite for
+    death — only the shock of absence. Someone asks: "What do we do? How do we
+    honor them? How do we say goodbye to someone we just learned the name of?"
+  choices:
+    - text: "Organize a ritual — gather, speak, remember."
+      skill_check: rhetoric
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You gather everyone. People speak of the dead — small stories, kind
+            words. You find language for grief and respect. When it is done,
+            people feel less lost. Death has been acknowledged. It has weight.
+          effects:
+            knowledge: 1
+            stability: 0.03
+            population: -1
+          history_flag: death_ritual
+        failure:
+          text: >
+            The ritual feels forced, awkward, even false. People disperse early.
+            The death goes unprocessed. Grief lingers, unresolved.
+          effects:
+            chaos: 0.06
+            population: -1
+    - text: "Treat it practically — wash the body, commit it to earth, move forward."
+      skill_check: pragmatism
+      difficulty: 3
+      outcomes:
+        success:
+          text: >
+            You organize the burial swiftly and with dignity. The body is
+            honored, the settlement is spared prolonged anguish. Life resumes.
+          effects:
+            population: -1
+            stability: 0.02
+          history_flag: death_ritual
+        failure:
+          text: >
+            The hurried approach feels disrespectful. Someone protests loudly.
+            The burial becomes a source of shame rather than closure.
+          effects:
+            population: -1
+            chaos: 0.08
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_hoarder
+  conditions:
+    tier: 2
+    turn_min: 7
+    chaos_min: 0.12
+  text: >
+    Someone is hiding food. It was discovered in a pit beneath their sleeping
+    area — enough for weeks, stripped from the shared stores during night
+    hours. {npc} brings the evidence to you: "What do we do? Do they fear us?
+    Do they think we will starve them?"
+  choices:
+    - text: "Confront with authority: theft is betrayal, enforce swift punishment."
+      skill_check: authority
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You confront the hoarder publicly. They confess fear — fear of
+            famine, fear of being left behind. You enforce a punishment: they
+            surrender the hoard and work extra labor. Order is restored, if brittle.
+          effects:
+            chaos: -0.06
+            food: -2
+          assign_role: enforcer
+        failure:
+          text: >
+            The hoarder denies everything, claims they are framed. Others begin
+            to suspect each other. Trust fractures along invisible lines.
+          effects:
+            chaos: 0.1
+    - text: "Show mercy with wisdom: understand the fear beneath the theft."
+      skill_check: wisdom
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You speak privately with the hoarder, listen. Fear of starvation,
+            trauma from before. You include them in food planning, give them
+            responsibility and security. They empty the pit willingly. Trust
+            deepens.
+          effects:
+            stability: 0.03
+            food: 1
+        failure:
+          text: >
+            Your mercy is misread as weakness. The hoarder hides more food.
+            Others start to wonder if they should too.
+          effects:
+            chaos: 0.12
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_messenger
+  conditions:
+    tier: 2
+    turn_min: 8
+    required_milestones: [explored]
+  text: >
+    A stranger emerges from the woods — thin, scarred, speaking a dialect you
+    barely understand. They claim to come from the south, where "many people
+    live together under a single sky, in great stone buildings." {npc} looks
+    skeptical: "Are they telling the truth, or are they mad?"
+  choices:
+    - text: "Question them with wisdom about their origin."
+      skill_check: wisdom
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You ask careful questions. Their answers are consistent, detailed,
+            specific. The stories align. This civilization, however strange,
+            is real. People lived before you, built before you, thought before
+            you. The weight of that settles on everyone.
+          effects:
+            knowledge: 2
+          history_flag: prior_civilization_found
+        failure:
+          text: >
+            You press them, and the stories contradict. Either they are lying
+            or they are mad. Either way, the settlement remains alone in a dark
+            world.
+          effects:
+            knowledge: -1
+    - text: "Challenge them to prove it — ask for trade or signs of their people."
+      skill_check: courage
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            They produce objects from their satchel — tools of a design you
+            have never seen, cloth woven in patterns beyond your skill. The
+            proof is real. Trade goods are exchanged. A door opens to the world.
+          effects:
+            knowledge: 2
+            food: 3
+          history_flag: prior_civilization_found
+        failure:
+          text: >
+            They have little to trade, or what they offer is clearly stolen.
+            The skepticism deepens. You show them away with suspicion.
+          effects:
+            knowledge: 1
+    - text: "Listen with rhetoric: share your own story and invite theirs."
+      skill_check: rhetoric
+      difficulty: 3
+      outcomes:
+        success:
+          text: >
+            You speak of your own journey — the cave, the fire, the slow climb
+            outward. They respond with tears, with recognition. Two isolated
+            peoples touch, briefly. Knowledge passes in both directions.
+          effects:
+            knowledge: 2
+            stability: 0.03
+          history_flag: prior_civilization_found
+        failure:
+          text: >
+            The stranger grows defensive, returns to broken speech, and leaves
+            in the night. The moment passes. You are alone again.
+          effects:
+            knowledge: 1
+    - text: "Retreat to the cave."
+      special: retreat

@@ -1,15 +1,15 @@
 import random
 
 
-def roll(attribute: int, difficulty: int, chaos: float) -> tuple[bool, int, int]:
+def roll(attribute: int, difficulty: int, chaos: float) -> bool:
     """Roll a d10 + attribute modifier against a difficulty, influenced by chaos.
 
-    Chaos makes outcomes less predictable by adding a random swing.
+    Positive chaos (luck) increases success chance; negative chaos (bad luck) decreases it.
 
-    Returns (success, roll_value, target).
+    Returns True if successful, False if failed.
     """
     base_roll = random.randint(1, 10)
-    chaos_swing = random.uniform(-chaos * 4, chaos * 2)  # chaos hurts more than it helps
+    chaos_swing = chaos * random.uniform(0, 3)  # chaos modifier, scales with magnitude and sign
     final = base_roll + attribute + chaos_swing
     target = difficulty + 5  # base target is difficulty + 5
-    return final >= target, round(final), target
+    return final >= target

@@ -43,18 +43,18 @@ TASKS = {
 
 
 def get_max_delegation_slots(state: GameState) -> int:
-    """How many NPCs can be delegated, based on milestones achieved."""
-    achieved = state.achieved_milestone_ids
-    slots = 0
-    if "roles_assigned" in achieved:
-        slots = 2
-    if "council" in achieved:
-        slots = 4
-    if "specialization" in achieved:
-        slots = 6
-    if "philosopher_king" in achieved:
-        slots = 8
-    return slots
+    """How many NPCs can be delegated, based on tier progression."""
+    tier = state.current_tier
+    if tier >= 5:
+        return 8
+    elif tier >= 4:
+        return 6
+    elif tier >= 3:
+        return 4
+    elif tier >= 2:
+        return 2
+    else:
+        return 0
 
 
 def get_delegated_npcs(state: GameState) -> list[NPC]:
@@ -71,6 +71,21 @@ def get_available_for_delegation(state: GameState) -> list[NPC]:
         n for n in state.npcs
         if n.alive and (n.role is None or n.role in delegation_roles)
     ]
+
+
+def assign_delegation(state: GameState, npc_idx: int, task: str) -> None:
+    """Assign an NPC to a delegation task. Replace any previous assignment."""
+    if npc_idx < 0 or npc_idx >= len(state.npcs):
+        return
+
+    npc = state.npcs[npc_idx]
+    if not npc.alive:
+        return
+
+    if task not in TASKS:
+        return
+
+    state.delegations[npc_idx] = task
 
 
 def get_npc_task_impression(npc: NPC, task_id: str) -> str:
@@ -110,11 +125,15 @@ def process_delegations(state: GameState) -> list[DelegationResult]:
     """Process all delegation tasks for this turn. Returns results."""
     results = []
 
-    for npc in state.npcs:
-        if not npc.alive or npc.role not in TASKS:
+    for npc_idx, task_id in state.delegations.items():
+        if npc_idx < 0 or npc_idx >= len(state.npcs):
             continue
 
-        task = TASKS[npc.role]
+        npc = state.npcs[npc_idx]
+        if not npc.alive or task_id not in TASKS:
+            continue
+
+        task = TASKS[task_id]
         result = _resolve_delegation(npc, task, state.chaos)
         results.append(result)
 
@@ -137,6 +156,7 @@ def process_delegations(state: GameState) -> list[DelegationResult]:
             if "loyalty" in result.effects:
                 npc.loyalty = max(0.0, min(1.0, npc.loyalty + result.effects["loyalty"]))
 
+    state.delegations.clear()
     return results
 
 

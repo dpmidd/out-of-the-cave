@@ -6,7 +6,7 @@ class Civilization(BaseModel):
 
     population: int = Field(default=12, ge=0)
     stability: float = Field(default=0.1, ge=0.0, le=1.0)
-    food: int = Field(default=10, ge=0)
+    food: int = Field(default=0, ge=0)
     shelter: int = Field(default=0, ge=0)
     knowledge: int = Field(default=0, ge=0)
     laws: list[str] = Field(default_factory=list)

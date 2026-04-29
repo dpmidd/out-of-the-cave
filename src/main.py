@@ -1,6 +1,7 @@
 import random
 import sys
 
+from src.ai import narrator
 from src.models.game_state import GameState
 from src.persistence.save_manager import (
     delete_save,
@@ -113,6 +114,9 @@ def game_loop(state: GameState) -> None:
         npc_name = random.choice(alive_npcs).name if alive_npcs else "a stranger"
         event_text = event["text"].replace("{npc}", npc_name)
 
+        if narrator.should_use_ai(state):
+            event_text = narrator.enhance_event(event_text, state, npc_name)
+
         renderer.show_event(event_text)
         renderer.show_choices(event["choices"])
 
@@ -124,6 +128,9 @@ def game_loop(state: GameState) -> None:
         if outcome_text == "retreat":
             renderer.show_retreat()
             return
+
+        if narrator.should_use_ai(state):
+            outcome_text = narrator.enhance_outcome(outcome_text, info["success"], state)
 
         renderer.show_outcome(outcome_text, info)
 
@@ -171,7 +178,10 @@ def game_loop(state: GameState) -> None:
         newly_achieved = check_milestones(state, turn_deaths)
         for ms_id in newly_achieved:
             ms = next(m for m in state.milestones if m.id == ms_id)
-            renderer.show_milestone_achieved(ms.name, ms.description)
+            milestone_desc = ms.description
+            if narrator.should_use_ai(state):
+                milestone_desc = narrator.enhance_milestone(ms.name, ms.description, ms.tier, state)
+            renderer.show_milestone_achieved(ms.name, milestone_desc)
 
         # Easy mode: save checkpoint on milestone achievement
         if newly_achieved and state.difficulty == "easy":

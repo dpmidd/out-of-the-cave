@@ -498,3 +498,452 @@
             chaos: 0.12
     - text: "Retreat to the cave."
       special: retreat
+
+- id: the_reformed_council
+  conditions:
+    tier: 4
+    turn_min: 18
+    required_milestones: [council, justice]
+  text: >
+    {npc} brings a radical proposal to the council: the council itself should
+    rotate. "Power should not be permanent. It should circulate. Otherwise, we
+    become what we fled — a fixed order, unchangeable." The council is divided.
+  choices:
+    - text: "Establish term limits through wisdom."
+      skill_check: wisdom
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You propose a structure: each council member serves for a fixed time,
+            then must step down. Fresh voices enter; power circulates. The
+            transition is rocky, but it works. The council becomes less personal,
+            more institutional.
+          effects:
+            stability: 0.05
+            law: "Council terms are limited by time, not by ambition"
+        failure:
+          text: >
+            The term-limit proposal is seen as a threat by current council
+            members. They obstruct it. Your attempt at reform fails.
+          effects:
+            stability: -0.02
+    - text: "Implement rotation by lot with pragmatism."
+      skill_check: pragmatism
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You propose something radical: council seats are filled by chance,
+            by lottery among qualified citizens. No one chooses their peers; fate
+            does. It is terrifying and liberating. The council becomes truly
+            representative.
+          effects:
+            stability: 0.04
+            law: "Council seats rotate by lot among eligible citizens"
+        failure:
+          text: >
+            The lottery system is chaotic. Unqualified people are chosen.
+            Mistakes are made. People lose faith in the council's competence.
+          effects:
+            chaos: 0.08
+            stability: -0.03
+    - text: "Defend the current council with authority."
+      skill_check: authority
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You argue that disrupting a functioning council is foolish. "These
+            people have proven themselves. Why break what works?" The settlement
+            accepts this. The council endures, grateful and loyal to you.
+          effects:
+            stability: 0.03
+            loyalty_all: 0.03
+        failure:
+          text: >
+            Your defense of the council sounds like you are defending yourself.
+            People see you as invested in power. Trust erodes.
+          effects:
+            chaos: 0.08
+            stability: -0.02
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_census
+  conditions:
+    tier: 4
+    turn_min: 19
+    required_milestones: [three_laws]
+    min_population: 8
+  text: >
+    {npc} proposes something strange: count everyone. Know exactly how many
+    people live here, who they are, what they do. "A city that does not know
+    itself cannot govern itself." But counting feels intrusive, almost violent.
+  choices:
+    - text: "Organize the census with pragmatism."
+      skill_check: pragmatism
+      difficulty: 4
+      outcomes:
+        success:
+          text: >
+            You organize the count methodically. Names, ages, skills. By the end,
+            you have a map of the settlement — who is weak, who is strong, where
+            resources should flow. It is clinical but useful.
+          effects:
+            knowledge: 2
+        failure:
+          text: >
+            The census process is bungled. Numbers are lost, people are counted
+            twice. The data is useless, and people feel exposed for nothing.
+          effects:
+            knowledge: 1
+            chaos: 0.05
+    - text: "Approach it with wisdom — emphasize understanding, not control."
+      skill_check: wisdom
+      difficulty: 5
+      outcomes:
+        success:
+          text: >
+            You frame the census as self-knowledge, not surveillance. "We want to
+            understand who we are, not control you." People cooperate more openly.
+            The census is thorough and humane.
+          effects:
+            knowledge: 2
+            stability: 0.02
+        failure:
+          text: >
+            The frame fails. People still feel counted, catalogued, treated like
+            property. Resentment festers.
+          effects:
+            knowledge: 1
+            chaos: 0.06
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_taxation_debate
+  conditions:
+    tier: 4
+    turn_min: 20
+    required_milestones: [three_laws, council]
+    chaos_delta: 0.1
+  text: >
+    The settlement needs resources to fund shared projects — roads, granaries,
+    defenses. {npc} proposes a tax: each household gives a portion of what they
+    produce to the common good. But others cry theft: "We work for ourselves,
+    not the collective."
+  choices:
+    - text: "Defend taxation with rhetoric about the commons."
+      skill_check: rhetoric
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You speak eloquently about how individual flourishing depends on
+            collective infrastructure. "Your shelter stands because roads bring
+            traders. Your food grows because we defend the fields together." The
+            tax is accepted.
+          effects:
+            food: 5
+            law: "Each household contributes a portion to the common good"
+        failure:
+          text: >
+            Your rhetoric does not convince those who hoard. They see the tax as
+            persecution, and they resist openly. Conflict erupts.
+          effects:
+            chaos: 0.15
+    - text: "Make taxation voluntary with wisdom — appeal to generosity."
+      skill_check: wisdom
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You propose a voluntary contribution system. Those who give are
+            honored, their names remembered. Surprisingly, most give. Generosity
+            rises when it is a choice.
+          effects:
+            food: 4
+            stability: 0.02
+        failure:
+          text: >
+            Few volunteer. The system fails to raise resources. Projects stall.
+            Those who do volunteer resent those who don't.
+          effects:
+            stability: -0.02
+            chaos: 0.08
+    - text: "Implement taxation by authority — this is necessary, period."
+      skill_check: authority
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You declare the tax law and enforce it. Resentment is real, but so is
+            the infrastructure that results. Roads are built. The settlement grows.
+          effects:
+            food: 5
+            law: "Each household contributes a portion to the common good"
+            loyalty_all: -0.05
+        failure:
+          text: >
+            Your enforcement is brutal. People hide crops, cheat counts, resist.
+            The tax fails in practice, and your authority is diminished.
+          effects:
+            chaos: 0.12
+            food: 2
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_test_of_the_constitution
+  conditions:
+    tier: 4
+    turn_min: 21
+    required_milestones: [justice, three_laws]
+  text: >
+    The constitution you have built is being tested. A council member has
+    violated it — technically within the law, but contrary to its spirit.
+    {npc} asks: "Is the constitution real? Or does power override it when it is
+    inconvenient?"
+  choices:
+    - text: "Enforce the spirit with wisdom — interpret the law justly."
+      skill_check: wisdom
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You argue that the constitution's intent matters more than its exact
+            wording. You propose a reinterpretation that closes the loophole and
+            rebukes the council member. The constitution is tested and proven.
+          effects:
+            knowledge: 2
+            stability: 0.04
+        failure:
+          text: >
+            Your reinterpretation is contested. Others argue for different
+            readings. The constitution becomes uncertain, argued over, weakened.
+          effects:
+            knowledge: 1
+            chaos: 0.08
+    - text: "Enforce the letter with authority — the words are clear."
+      skill_check: authority
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You argue that the constitution's exact wording must be honored,
+            even when inconvenient. The council member is not technically guilty.
+            But the law is proven stable and dependable.
+          effects:
+            stability: 0.05
+            knowledge: 1
+        failure:
+          text: >
+            Your literal interpretation allows injustice. People see the
+            constitution as a tool for the powerful to hide behind. Faith erodes.
+          effects:
+            chaos: 0.1
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_exile_returns
+  conditions:
+    tier: 4
+    turn_min: 22
+    required_milestones: [justice]
+    blocked_by_milestones: [philosopher_king]
+  text: >
+    Someone exiled years ago has returned — changed, contrite, asking to be
+    received. {npc} is torn: "They were cast out for breaking laws. But people
+    can change. Should we honor that, or honor the exile?"
+  choices:
+    - text: "Welcome them back with wisdom and forgiveness."
+      skill_check: wisdom
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You speak with the returning exile, hear their story, see their
+            change. You propose a period of probation, then restoration. They
+            weep with relief. The settlement discovers that redemption is
+            possible.
+          effects:
+            population: 1
+            law: "Exile may be lifted by council vote after demonstrated change"
+        failure:
+          text: >
+            The exile's contrition is not genuine. They return to old patterns.
+            Their return destabilizes the settlement.
+          effects:
+            chaos: 0.1
+    - text: "Uphold the exile with authority — what is done cannot be undone."
+      skill_check: authority
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You refuse them entry. "The exile stands." It is harsh, but it
+            teaches that actions have permanent consequences. The law is proven
+            binding.
+          effects:
+            stability: 0.03
+        failure:
+          text: >
+            The public exile is cruel. People sympathize with the returning exile
+            and resent you. Your authority is damaged.
+          effects:
+            chaos: 0.08
+            stability: -0.02
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_writing_of_the_constitution
+  conditions:
+    tier: 4
+    turn_min: 23
+    required_milestones: [philosopher_king, three_laws, justice, allegory_taught]
+    blocked_by_milestones: [constitution]
+  text: >
+    The moment has arrived. Everything you have learned — the laws, the
+    councils, the debates — must be written into something permanent. A true
+    constitution. {npc} asks: "Can we write down what we have learned? Can we
+    make it real?"
+  choices:
+    - text: "Lead the writing with wisdom — synthesize everything."
+      skill_check: wisdom
+      difficulty: 8
+      outcomes:
+        success:
+          text: >
+            You spend days writing, revising, consulting the council. The
+            constitution emerges — clear, comprehensive, alive. It says what
+            the settlement is and what it aspires to be. It is the work of your
+            life.
+          effects:
+            knowledge: 3
+            stability: 0.05
+          history_flag: constitution_written
+        failure:
+          text: >
+            The writing is incomplete, contradictory, or abstract. People cannot
+            understand it. The constitution fails to inspire or guide.
+          effects:
+            knowledge: 1
+            stability: -0.02
+    - text: "Facilitate the writing with rhetoric — let the settlement speak."
+      skill_check: rhetoric
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You gather people and ask them what the constitution should say.
+            You listen, synthesize, weave their words together. The result is
+            rough but genuine — written by and for the settlement.
+          effects:
+            knowledge: 2
+            stability: 0.05
+          history_flag: constitution_written
+        failure:
+          text: >
+            Too many voices create chaos. The writing becomes a battleground.
+            No consensus emerges.
+          effects:
+            knowledge: 1
+            chaos: 0.1
+    - text: "Use pragmatism to draft a functional document."
+      skill_check: pragmatism
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You write a practical constitution — what must be done, how it will
+            be done. It is not poetic, but it works. The settlement has something
+            to point to and say: "This is how we govern."
+          effects:
+            knowledge: 2
+            stability: 0.04
+          history_flag: constitution_written
+        failure:
+          text: >
+            The pragmatic approach is too narrow. It omits principles. It becomes
+            a dry rulebook, not a vision.
+          effects:
+            knowledge: 1
+            stability: -0.01
+    - text: "Retreat to the cave."
+      special: retreat
+
+- id: the_named_successor
+  conditions:
+    tier: 4
+    turn_min: 24
+    required_milestones: [philosopher_king, education]
+    blocked_by_milestones: [succession]
+  text: >
+    The settlement must decide who comes after you. Not by force, not by
+    inheritance, but by deliberate choice. {npc} speaks for the council:
+    "Someone must carry this work forward. Who will it be? And how do we choose
+    in a way that honors both the individual and the community?"
+  choices:
+    - text: "Choose with wisdom — identify the worthy successor."
+      skill_check: wisdom
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You consult with the council, observe the candidates, choose someone
+            who is both capable and humble. You present them to the settlement
+            with an explanation: "They are ready. The work continues in worthy
+            hands." Succession is smooth.
+          effects:
+            stability: 0.05
+            law: "Succession follows merit determined by council"
+          history_flag: successor_chosen
+        failure:
+          text: >
+            Your choice is contested. Others believed different people should
+            lead. The succession becomes a source of conflict.
+          effects:
+            chaos: 0.12
+            stability: -0.03
+    - text: "Empower the council to choose with authority."
+      skill_check: authority
+      difficulty: 7
+      outcomes:
+        success:
+          text: >
+            You tell the council: "You will choose my successor. I trust you to
+            do this well." You step back, let them decide. The process is
+            collective. The new leader is their choice, not yours.
+          effects:
+            stability: 0.04
+            law: "Succession follows merit determined by council"
+            history_flag: successor_chosen
+        failure:
+          text: >
+            The council is paralyzed by the choice. They cannot agree. The
+            settlement is left without direction while they debate.
+          effects:
+            stability: -0.02
+            chaos: 0.08
+    - text: "Propose a open debate with rhetoric — let the settlement decide."
+      skill_check: rhetoric
+      difficulty: 6
+      outcomes:
+        success:
+          text: >
+            You facilitate a public debate where candidates speak of their vision.
+            The settlement hears them, questions them, eventually chooses. The new
+            leader is the people's choice.
+          effects:
+            stability: 0.04
+            law: "Succession follows merit determined by council"
+            knowledge: 1
+            history_flag: successor_chosen
+        failure:
+          text: >
+            The debate becomes partisan and divisive. Factions form. The
+            settlement is split between candidates.
+          effects:
+            chaos: 0.1
+            stability: -0.02
+    - text: "Retreat to the cave."
+      special: retreat
